@@ -1,0 +1,1569 @@
+<title>Don's Bachelor Trip</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=Public+Sans:wght@400;500;600;700&family=Schibsted+Grotesk:wght@600;700&display=swap">
+<style>
+/* Layout: a clean trip guide. White page, one blue accent, sticky top tabs; trip pages get a sticky table of contents beside the content. Single light theme on purpose. */
+:root {
+  --bg: #FFFFFF;
+  --soft: #F5F7FA;
+  --line: #E3E7ED;
+  --ink: #17202A;
+  --ink-2: #3A4552;
+  --muted: #687584;
+  --accent: #1F5FC4;
+  --accent-soft: #EDF3FD;
+  --ok: #1B7443;
+  --ok-bg: #E7F4EC;
+  --warn: #8A5300;
+  --warn-bg: #FCF2DF;
+  --sym-green: #1C8A4A;
+  --sym-blue: #1F5FC4;
+  --sym-black: #17202A;
+  --hdr: 60px;
+  --font-head: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Public Sans", -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html { scroll-padding-top: calc(var(--hdr) + 20px); }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--bg); }
+img { max-width: 100%; display: block; }
+[hidden] { display: none !important; }
+a { color: var(--accent); text-underline-offset: 2px; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+h1, h2, h3 { font-family: var(--font-head); font-weight: 700; line-height: 1.15; letter-spacing: -.015em; margin: 0; text-wrap: balance; color: var(--ink); }
+h1 { font-size: clamp(2.2rem, 5vw, 3.2rem); }
+h2 { font-size: clamp(1.5rem, 3vw, 1.9rem); }
+h3 { font-size: 1.15rem; letter-spacing: -.005em; }
+p { margin: 0; }
+.wrap { max-width: 1140px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+.eyebrow { font-size: .78rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.muted { color: var(--muted); }
+.small { font-size: .88rem; }
+.mono, .num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.lede { font-size: 1.1rem; color: var(--ink-2); max-width: 66ch; }
+
+/* top bar */
+.topbar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: rgba(255, 255, 255, .92); -webkit-backdrop-filter: saturate(1.6) blur(12px); backdrop-filter: saturate(1.6) blur(12px); border-bottom: 1px solid var(--line); }
+.bar { display: flex; align-items: center; gap: 20px; height: var(--hdr); }
+.brand { font-family: var(--font-head); font-weight: 700; font-size: 1.08rem; color: var(--ink); text-decoration: none; white-space: nowrap; flex: none; letter-spacing: -.01em; }
+.nav { display: flex; gap: 2px; overflow-x: auto; flex: 1; min-width: 0; scrollbar-width: none; justify-content: flex-end; }
+.nav::-webkit-scrollbar { display: none; }
+.nav a { flex: none; position: relative; font-size: .9rem; font-weight: 500; color: var(--ink-2); text-decoration: none; padding: 8px 11px; border-radius: 8px; }
+.nav a:hover { background: var(--soft); color: var(--ink); }
+.nav a[aria-current="page"] { color: var(--accent); font-weight: 600; }
+.nav a[aria-current="page"]::after { content: ""; position: absolute; left: 11px; right: 11px; bottom: -11px; height: 2px; background: var(--accent); border-radius: 2px; }
+.count { display: inline-block; min-width: 18px; padding: 0 5px; margin-left: 3px; border-radius: 9px; background: var(--accent); color: #fff; font-size: .7rem; font-weight: 700; line-height: 18px; text-align: center; }
+.count:empty { display: none; }
+
+main { padding-block: 40px 80px; }
+.view { display: grid; gap: 64px; }
+.section { display: grid; gap: 20px; }
+.section-head { display: grid; gap: 6px; }
+
+/* buttons */
+.btn { font: inherit; font-weight: 600; font-size: .9rem; border: 1px solid var(--line); background: var(--bg); color: var(--ink); padding: 8px 14px; border-radius: 8px; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; transition: border-color .15s, background .15s; }
+.btn:hover { border-color: var(--ink-2); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn.primary:hover { background: #1A52AB; border-color: #1A52AB; }
+.btn[aria-pressed="true"] { background: var(--ok-bg); border-color: var(--ok); color: var(--ok); }
+.btn:disabled { opacity: .5; cursor: default; }
+.btn .count { background: var(--soft); color: var(--ink-2); }
+.btn.primary .count { background: rgba(255, 255, 255, .25); color: #fff; }
+.linkbtn { font: inherit; font-size: .84rem; color: var(--accent); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
+.ext::after { content: " ↗"; font-size: .85em; }
+
+/* overview */
+.intro { display: grid; gap: 16px; padding-bottom: 8px; }
+.keyfacts { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 0; margin: 12px 0 0; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.keyfacts div { padding: 14px 16px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); margin: 0 -1px -1px 0; }
+.keyfacts dt { font-size: .74rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.keyfacts dd { margin: 2px 0 0; font-weight: 600; }
+.cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.card { border: 1px solid var(--line); border-radius: 14px; overflow: hidden; display: grid; grid-template-rows: auto 1fr; background: var(--bg); transition: box-shadow .25s, border-color .25s; min-width: 0; }
+.card:hover { border-color: #CBD3DD; box-shadow: 0 10px 30px rgba(23, 32, 42, .08); }
+.card .ph { aspect-ratio: 16 / 9; overflow: hidden; background: var(--soft); max-width: 100%; }
+.card .ph img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease; }
+.card:hover .ph img { transform: scale(1.03); }
+.card .body { padding: 18px 20px 20px; display: grid; gap: 12px; align-content: start; }
+.card .top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.label { display: inline-block; font-size: .74rem; font-weight: 600; padding: 3px 9px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); }
+.label.neutral { background: var(--soft); color: var(--ink-2); }
+.price { font-family: var(--font-mono); font-size: .95rem; color: var(--ink); }
+.price small { font-family: var(--font-body); color: var(--muted); font-size: .8rem; }
+.minifacts { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px 14px; margin: 0; font-size: .9rem; }
+.minifacts dt { color: var(--muted); }
+.minifacts dd { margin: 0; }
+.card .actions { display: flex; gap: 8px; flex-wrap: wrap; padding-top: 4px; }
+
+/* week strip */
+.week { display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); gap: 6px; }
+.day { border-radius: 10px; padding: 10px 6px; display: grid; gap: 2px; text-align: center; background: var(--soft); min-width: 0; }
+.day b { font-size: .86rem; }
+.day span { font-size: .72rem; color: var(--muted); line-height: 1.3; }
+.day.ski { background: var(--accent-soft); }
+.day.ski b { color: var(--accent); }
+.day.travel { background: var(--bg); border: 1px dashed var(--line); }
+
+/* tables */
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; }
+table { border-collapse: collapse; width: 100%; font-size: .92rem; }
+th, td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: .74rem; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); background: var(--soft); white-space: nowrap; }
+tr:last-child td { border-bottom: 0; }
+td.num { text-align: right; white-space: nowrap; font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+tr.total td { font-weight: 700; background: var(--soft); }
+tr.sub td { color: var(--muted); }
+
+/* results */
+.results { border: 1px solid var(--line); border-radius: 14px; padding: 20px; display: grid; gap: 14px; }
+.results-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.tally { display: grid; gap: 10px; }
+.trow { display: grid; grid-template-columns: 190px minmax(0, 1fr) 40px; gap: 14px; align-items: center; font-size: .92rem; }
+.trow .tname { font-weight: 500; min-width: 0; overflow-wrap: anywhere; }
+.tbar { height: 10px; border-radius: 5px; background: var(--soft); overflow: hidden; }
+.tbar i { display: block; height: 100%; background: #9DB8E3; border-radius: 5px; transition: width .5s ease; }
+.trow.lead .tbar i { background: var(--accent); }
+.tnum { font-family: var(--font-mono); text-align: right; }
+
+/* trip page */
+.crumbs { font-size: .88rem; color: var(--muted); }
+.crumbs a { color: var(--muted); }
+.dhead { display: grid; gap: 14px; }
+.stats { display: flex; flex-wrap: wrap; gap: 8px; }
+.stat { font-size: .86rem; padding: 6px 12px; border-radius: 999px; background: var(--soft); color: var(--ink-2); display: inline-flex; align-items: center; gap: 6px; }
+.stat b { font-family: var(--font-mono); font-weight: 500; color: var(--ink); }
+.banner { position: relative; border-radius: 16px; overflow: hidden; aspect-ratio: 21 / 8; max-width: 100%; background: var(--soft); }
+.banner img { width: 100%; height: 100%; object-fit: cover; }
+.credit { position: absolute; right: 10px; bottom: 10px; font-size: .7rem; color: #fff; background: rgba(0, 0, 0, .45); padding: 2px 7px; border-radius: 4px; max-width: 80%; text-align: right; }
+.layout { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 48px; align-items: start; }
+.toc { position: sticky; top: calc(env(safe-area-inset-top, 0px) + var(--hdr) + 24px); display: grid; gap: 2px; font-size: .9rem; }
+.toc .tl { font-size: .74rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); padding: 0 12px 8px; }
+.toc .tocl { font: inherit; text-align: left; cursor: pointer; background: none; border: 0; color: var(--ink-2); padding: 6px 12px; border-left: 2px solid var(--line); }
+.toc .tocl:hover { color: var(--ink); border-left-color: #B9C3CF; }
+.toc .tocl.on { color: var(--accent); border-left-color: var(--accent); font-weight: 600; }
+.toc .btn { margin: 14px 0 0 12px; justify-self: start; }
+.content { display: grid; gap: 56px; min-width: 0; }
+.dsec { display: grid; gap: 16px; scroll-margin-top: calc(var(--hdr) + 24px); }
+.dsec > h2 { padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+.two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
+.box { border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.box.soft { background: var(--soft); border-color: transparent; }
+.box h3 { font-size: 1rem; }
+.bt { font-size: .74rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin: 0; }
+.list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; font-size: .94rem; }
+.list li { padding-left: 18px; position: relative; }
+.list li::before { content: ""; position: absolute; left: 2px; top: .62em; width: 6px; height: 6px; border-radius: 50%; background: #9AA6B4; }
+.list.pros li::before { background: var(--ok); }
+.list.cons li::before { background: #D08A1E; }
+.facts4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin: 0; }
+.facts4 div { background: var(--soft); border-radius: 10px; padding: 12px 14px; }
+.facts4 dt { font-size: .74rem; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); }
+.facts4 dd { margin: 2px 0 0; font-weight: 600; font-size: .94rem; }
+.note { font-size: .88rem; color: var(--ink-2); background: var(--soft); border-radius: 10px; padding: 12px 14px; }
+
+/* stays */
+.stays { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.stay { border: 1px solid var(--line); border-radius: 14px; overflow: hidden; display: grid; grid-template-rows: auto 1fr; min-width: 0; transition: box-shadow .25s, border-color .25s; }
+.stay:hover { border-color: #CBD3DD; box-shadow: 0 10px 28px rgba(23, 32, 42, .07); }
+.stay.pick { border-color: var(--accent); }
+.stay .ph { position: relative; aspect-ratio: 16 / 10; background: var(--soft); overflow: hidden; max-width: 100%; }
+.stay .ph img { width: 100%; height: 100%; object-fit: cover; }
+.stay .ph .noimg { position: absolute; inset: 0; display: grid; place-items: center; color: var(--muted); font-size: .86rem; padding: 16px; text-align: center; }
+.stay .ph .label { position: absolute; left: 10px; top: 10px; background: var(--accent); color: #fff; }
+.stay .body { padding: 14px 16px 16px; display: grid; gap: 8px; align-content: start; }
+.stay .kind { font-size: .8rem; color: var(--muted); }
+.stay .rate { font-size: .88rem; font-weight: 600; color: var(--ink); }
+.stay dl { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px 12px; margin: 0; font-size: .86rem; }
+.stay dt { color: var(--muted); }
+.stay dd { margin: 0; }
+.stay .links { display: flex; gap: 14px; flex-wrap: wrap; font-size: .88rem; font-weight: 600; padding-top: 2px; }
+.areahead { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+
+/* getting around */
+.answer { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 14px; align-items: start; border-radius: 12px; padding: 16px 18px; background: var(--accent-soft); }
+.answer .yn { font-family: var(--font-head); font-weight: 700; font-size: 1.05rem; color: var(--accent); white-space: nowrap; }
+.scen { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.scen div { border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; display: grid; gap: 2px; }
+.scen div.rec { border-color: var(--accent); }
+.scen b { font-family: var(--font-mono); font-weight: 500; font-size: 1.1rem; }
+
+/* ski days, city, eat, timeline */
+.skidays { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.skiday { border: 1px solid var(--line); border-radius: 12px; padding: 16px; display: grid; gap: 10px; align-content: start; }
+.skiday .d { font-size: .78rem; font-weight: 600; color: var(--accent); letter-spacing: .03em; text-transform: uppercase; }
+.kv { display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 6px 10px; margin: 0; font-size: .88rem; }
+.kv dt { color: var(--muted); }
+.kv dd { margin: 0; }
+.acts { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 12px; }
+.act { border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; display: grid; gap: 6px; align-content: start; }
+.act .cat { justify-self: start; font-size: .72rem; font-weight: 600; padding: 2px 8px; border-radius: 999px; background: var(--soft); color: var(--ink-2); }
+.act .cat.must { background: var(--accent-soft); color: var(--accent); }
+.act b { font-size: 1rem; }
+.act .meta { font-family: var(--font-mono); font-size: .76rem; color: var(--ink-2); display: flex; flex-wrap: wrap; gap: 2px 12px; }
+.act p { font-size: .9rem; color: var(--ink-2); }
+.act .tip { font-size: .84rem; color: var(--muted); }
+.eatgrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.eatgrid ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; font-size: .9rem; }
+.eatgrid li b { display: block; font-weight: 600; }
+.eatgrid li span { color: var(--muted); font-size: .84rem; }
+.tier { font-family: var(--font-mono); font-size: .74rem; color: var(--muted); margin-left: 4px; font-weight: 500; }
+.timeline { list-style: none; margin: 0 0 0 6px; padding: 0; border-left: 2px solid var(--line); display: grid; }
+.timeline li { position: relative; padding: 0 0 18px 22px; display: grid; gap: 2px; }
+.timeline li::before { content: ""; position: absolute; left: -7px; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: var(--bg); border: 2px solid #9AA6B4; }
+.timeline li.ski::before { background: var(--accent); border-color: var(--accent); }
+.timeline li.city::before { border-color: var(--accent); }
+.timeline .when { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+.timeline .when b { font-weight: 700; }
+.timeline .when span { font-size: .8rem; color: var(--muted); }
+.timeline p { font-size: .94rem; color: var(--ink-2); max-width: 74ch; }
+.warnbox { background: var(--warn-bg); border-radius: 12px; padding: 16px 18px; display: grid; gap: 10px; }
+.warnbox .bt { color: var(--warn); }
+.warnbox .list li::before { background: var(--warn); }
+.dfoot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; align-items: center; padding: 18px 20px; border: 1px solid var(--line); border-radius: 12px; }
+
+/* trail-sign symbols for travel effort */
+.sym { display: inline-block; width: .72em; height: .72em; flex: none; }
+.sym.green { background: var(--sym-green); border-radius: 50%; }
+.sym.blue { background: var(--sym-blue); }
+.sym.black { background: var(--sym-black); transform: rotate(45deg) scale(.82); }
+.syms { display: inline-flex; gap: 2px; align-items: center; }
+
+/* compare */
+.chart { border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; display: grid; gap: 12px; }
+.crow, .caxis { display: grid; grid-template-columns: 190px minmax(0, 1fr) 118px; gap: 14px; align-items: center; }
+.crow .label2 { font-weight: 500; font-size: .92rem; }
+.crow .val { font-family: var(--font-mono); font-size: .84rem; text-align: right; }
+.track { position: relative; height: 20px; border-right: 1px solid var(--line); background-image: linear-gradient(to right, var(--line) 1px, transparent 1px); background-size: 25% 100%; }
+.track .bar { position: absolute; top: 5px; height: 10px; border-radius: 5px; background: #9DB8E3; }
+.track .bar.top { background: var(--accent); }
+.track .mid { position: absolute; top: 2px; width: 2px; height: 16px; margin-left: -1px; background: var(--ink); }
+.caxis .ticks { position: relative; height: 16px; font-family: var(--font-mono); font-size: .7rem; color: var(--muted); }
+.caxis .ticks span { position: absolute; transform: translateX(-50%); white-space: nowrap; }
+.checks { display: grid; gap: 8px; }
+.check { display: grid; grid-template-columns: 90px minmax(0, 1fr); gap: 14px; align-items: start; padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px; font-size: .93rem; }
+.status { font-size: .7rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; text-align: center; padding: 4px 6px; border-radius: 6px; }
+.status.ok { background: var(--ok-bg); color: var(--ok); }
+.status.warn { background: var(--warn-bg); color: var(--warn); }
+.status.bonus { background: var(--accent-soft); color: var(--accent); }
+
+/* vote */
+.notice { padding: 12px 14px; border-radius: 10px; background: var(--soft); font-size: .92rem; color: var(--ink-2); }
+.notice.ok { background: var(--ok-bg); color: var(--ok); }
+.notice.warn { background: var(--warn-bg); color: var(--warn); }
+.cast { padding: 16px 18px; border-radius: 12px; background: var(--accent-soft); border: 1px solid var(--accent); display: grid; gap: 10px; }
+.vopts { display: grid; gap: 10px; }
+.vopt { display: grid; grid-template-columns: 88px minmax(0, 1fr) auto; gap: 16px; align-items: center; border: 1px solid var(--line); border-radius: 12px; padding: 10px; }
+.vopt.mine { border-color: var(--ok); background: #FAFDFB; }
+.vopt .thumb { width: 88px; aspect-ratio: 4 / 3; border-radius: 8px; overflow: hidden; background: var(--soft); display: grid; place-items: center; }
+.vopt .thumb img { width: 100%; height: 100%; object-fit: cover; }
+.vopt .thumb .pin { font-family: var(--font-head); font-weight: 700; font-size: 1.5rem; color: var(--muted); }
+.vopt .mid { display: grid; gap: 6px; min-width: 0; }
+.vopt .mid b { font-size: 1rem; overflow-wrap: anywhere; }
+.vopt .mid .tag { display: none; }
+.vopt .line { display: flex; align-items: center; gap: 10px; }
+.vopt .tbar { flex: 1; min-width: 40px; }
+.vopt .why { font-size: .86rem; color: var(--muted); overflow-wrap: anywhere; }
+.vopt .by { font-size: .8rem; color: var(--muted); display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.vopt .acts2 { display: flex; flex-direction: column; gap: 6px; align-items: stretch; }
+.faces { display: flex; align-items: center; }
+.faces img { width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--bg); margin-left: -6px; object-fit: cover; }
+.faces img:first-child { margin-left: 0; }
+.ini { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: #C9D7EE; color: var(--ink); font-size: .68rem; font-weight: 700; border: 2px solid var(--bg); margin-left: -6px; }
+.faces .ini:first-child { margin-left: 0; }
+.voters { font-size: .8rem; color: var(--muted); overflow-wrap: anywhere; }
+.tag { display: inline-block; font-size: .7rem; font-weight: 600; padding: 1px 7px; border-radius: 999px; background: var(--soft); color: var(--ink-2); }
+.share { border-style: dashed; }
+.copyrow { display: flex; gap: 8px; }
+.copyrow input, .handrow input, .handrow select, .send input, .send textarea, .form input, .form textarea { font: inherit; font-size: .92rem; padding: 9px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--ink); min-width: 0; width: 100%; }
+.copyrow input { flex: 1; font-family: var(--font-mono); font-size: .8rem; }
+.handrow { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto; gap: 8px; }
+.send { border: 1px solid var(--accent); border-radius: 14px; padding: 18px 20px; display: grid; gap: 12px; }
+.send .row2, .form .row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
+.send label, .form label { display: grid; gap: 4px; font-size: .86rem; font-weight: 600; }
+.send label span, .form label span { font-weight: 400; color: var(--muted); }
+.send textarea { resize: none; font-family: var(--font-mono); font-size: .8rem; }
+.form { display: grid; gap: 12px; border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; }
+.form textarea { min-height: 72px; resize: vertical; }
+.form-foot { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.who { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; }
+.who .note { grid-column: 1 / -1; }
+.who-row { display: grid; grid-template-columns: 36px minmax(0, 1fr) auto; gap: 12px; align-items: center; border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; }
+.who-row img { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
+.who-row .ini { width: 36px; height: 36px; margin-left: 0; border: 0; font-size: .95rem; }
+.who-mid { display: grid; gap: 1px; min-width: 0; }
+.who-mid b { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; overflow-wrap: anywhere; font-weight: 600; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* plan */
+.steps { counter-reset: s; list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 14px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 12px; }
+.steps li::before { content: counter(s); width: 30px; height: 30px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); font-weight: 700; display: grid; place-items: center; font-size: .9rem; }
+.steps .when { font-size: .8rem; color: var(--muted); }
+.steps b { display: block; }
+.sources { columns: 2 320px; column-gap: 32px; font-size: .86rem; margin: 0; padding-left: 18px; }
+.sources li { break-inside: avoid; margin-bottom: 6px; }
+
+.toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(18px + env(safe-area-inset-bottom, 0px)); z-index: 40; background: var(--ink); color: #fff; padding: 10px 16px; border-radius: 10px; font-size: .9rem; font-weight: 500; max-width: calc(100% - 40px); box-shadow: 0 10px 30px rgba(0, 0, 0, .2); }
+footer { border-top: 1px solid var(--line); padding-block: 24px 44px; font-size: .84rem; color: var(--muted); }
+
+@media (max-width: 960px) {
+  .layout { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .toc { position: sticky; top: calc(env(safe-area-inset-top, 0px) + var(--hdr)); z-index: 10; display: flex; overflow-x: auto; gap: 6px; padding: 10px 0; background: rgba(255, 255, 255, .95); border-bottom: 1px solid var(--line); margin-bottom: 32px; scrollbar-width: none; }
+  .toc::-webkit-scrollbar { display: none; }
+  .toc .tl { display: none; }
+  .toc .tocl { flex: none; border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px; font-size: .84rem; white-space: nowrap; }
+  .toc .tocl.on { border-color: var(--accent); background: var(--accent-soft); }
+  .toc .btn { margin: 0; flex: none; padding: 5px 12px; font-size: .84rem; }
+  .skidays { grid-template-columns: minmax(0, 1fr); }
+  .eatgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 720px) {
+  :root { --hdr: 56px; }
+  .bar { gap: 10px; }
+  .brand { font-size: .98rem; }
+  .nav { justify-content: flex-start; }
+  .nav a { padding: 8px 8px; font-size: .86rem; }
+  .nav a[aria-current="page"]::after { left: 8px; right: 8px; bottom: -9px; }
+  main { padding-top: 28px; }
+  .view { gap: 48px; }
+  .cards, .stays, .two, .scen, .send .row2, .form .row, .handrow { grid-template-columns: minmax(0, 1fr); }
+  .eatgrid { grid-template-columns: minmax(0, 1fr); }
+  .week { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .banner { aspect-ratio: 16 / 9; }
+  .trow { grid-template-columns: minmax(0, 1fr) 36px; }
+  .trow .tname { grid-column: 1 / -1; margin-bottom: -6px; }
+  .crow, .caxis { grid-template-columns: minmax(0, 1fr) 104px; }
+  .crow .label2 { grid-column: 1 / -1; margin-bottom: -6px; }
+  .caxis > div:first-child { display: none; }
+  .check { grid-template-columns: minmax(0, 1fr); gap: 6px; }
+  .status { justify-self: start; }
+  .vopt { grid-template-columns: 64px minmax(0, 1fr); }
+  .vopt .thumb { width: 64px; }
+  .vopt .acts2 { grid-column: 1 / -1; flex-direction: row; }
+}
+
+/* gentle scroll motion: content is readable at rest; cards ease up as they enter */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .card, .stay, .act, .skiday, .box, .scen > div, .vopt, .who-row, .steps li, .check, .chart, .results, .timeline li {
+      animation: ease-up linear both; animation-timeline: view(); animation-range: entry 0% cover 22%;
+    }
+  }
+}
+@keyframes ease-up { from { opacity: .55; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<header class="topbar">
+  <div class="wrap bar">
+    <a class="brand" href="#">Don's Bachelor Trip</a>
+    <nav class="nav" aria-label="Pages" id="nav">
+      <a href="#">Overview</a>
+      <a href="#whistler">Whistler</a>
+      <a href="#banff">Banff</a>
+      <a href="#alps">Alps</a>
+      <a href="#barcelona">Barcelona</a>
+      <a href="#compare">Compare</a>
+      <a href="#vote">Vote<span class="count" id="nav-count"></span></a>
+      <a href="#plan">Plan</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <!-- OVERVIEW -->
+  <div class="view" data-view="home" id="v-home">
+    <section class="intro">
+      <p class="eyebrow">Ski trip planning · Feb 20–28, 2027</p>
+      <h1>Don's Bachelor Trip</h1>
+      <p class="lede">Four ways to do the trip, each with 3 days of skiing and the rest of the week in a nearby city. Each option has costs per person, where to stay, how to get around, and a day-by-day plan. Read through them, then vote.</p>
+      <dl class="keyfacts">
+        <div><dt>Dates</dt><dd>Sat Feb 20 – Sun Feb 28, 2027</dd></div>
+        <div><dt>Group</dt><dd>6 people</dd></div>
+        <div><dt>Skiing</dt><dd>3 days</dd></div>
+        <div><dt>Cost per person</dt><dd id="cost-range">$1,650 – $3,400 all-in</dd></div>
+        <div><dt>Vote by</dt><dd>Fri Nov 6</dd></div>
+        <div><dt>Until the trip</dt><dd id="countdown">16 weeks</dd></div>
+      </dl>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><h2>The four options</h2><p class="muted">Prices are per person, all-in, including an estimated round-trip flight.</p></div>
+      <div class="cards" id="home-cards"></div>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><h2>At a glance</h2></div>
+      <div class="table-wrap" id="home-glance"></div>
+    </section>
+
+    <section class="section">
+      <div class="results" id="home-results">
+        <div class="results-head"><h3>Live results</h3><a href="#vote" class="small">Vote or suggest a place</a></div>
+        <p class="small muted">Connecting to live votes…</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><h2>How the week works</h2><p class="muted">In North America: fly in Saturday, ski Monday to Wednesday when lift lines are short, and spend Friday and Saturday night in the city. The two Europe trips start with an overnight flight, so their days shift a little; each trip page shows its own week.</p></div>
+      <div class="week" id="home-week"></div>
+    </section>
+  </div>
+
+  <div class="view" data-view="dest" id="v-dest" hidden></div>
+  <div class="view" data-view="compare" id="v-compare" hidden></div>
+
+  <!-- VOTE -->
+  <div class="view" data-view="vote" id="v-vote" hidden>
+    <section class="section">
+      <div class="section-head">
+        <p class="eyebrow">Vote</p>
+        <h2>Which trip should we do?</h2>
+        <p class="muted">Pick one. You can change or remove your vote any time before Fri Nov 6, when lodging gets booked. Suggested places show up further down and can be voted on too.</p>
+      </div>
+      <div class="cast" id="cast-banner" hidden></div>
+      <div class="notice" id="vote-status">Connecting to live votes…</div>
+      <div class="box share" id="owner-share" hidden>
+        <p class="bt">Organizer tools · only you see this</p>
+        <p class="small">To send this to friends, turn on link sharing in the Share menu, then paste the link below in the group chat. Friends pick a trip and send their vote back as a link. Open their link and the vote is added with their name.</p>
+        <div class="copyrow"><input id="share-url" readonly value="https://claude.ai/artifact/X6CbmKDP5bTXR9qdmUgZAN" aria-label="Link to this page"><button class="btn" type="button" id="copy-share">Copy link</button></div>
+        <p class="small muted">Someone replied in the chat instead? Add their vote here:</p>
+        <form id="hand-form" class="handrow" autocomplete="off">
+          <label for="hand-name" class="sr">Friend's name</label>
+          <input id="hand-name" maxlength="30" placeholder="Friend's name" required>
+          <label for="hand-choice" class="sr">Their pick</label>
+          <select id="hand-choice"></select>
+          <button class="btn primary" type="submit">Add their vote</button>
+        </form>
+      </div>
+      <div class="vopts" id="vote-main"></div>
+      <div><button class="linkbtn" id="clear-vote" hidden>Remove my vote</button></div>
+      <div class="send" id="guest-send" hidden>
+        <div><h3>Send your vote</h3><p class="small muted">Only the organizer's account can write to the board, so your pick is sent as a link. Copy it, paste it in the group chat, and it gets added with your name.</p></div>
+        <div class="row2">
+          <label for="gv-name">Your name<input id="gv-name" maxlength="30" placeholder="e.g. Jake M" autocomplete="off"></label>
+          <label for="gv-note">Anything else? <span>Optional, goes in the message</span><input id="gv-note" maxlength="140" placeholder="e.g. Banff works for me too" autocomplete="off"></label>
+        </div>
+        <p id="gv-pick" class="small">Pick a trip above first.</p>
+        <textarea id="gv-msg" readonly rows="3" aria-label="Your vote message"></textarea>
+        <div class="form-foot"><span class="small muted" id="gv-copied"></span><button class="btn primary" type="button" id="gv-copy" disabled>Copy my vote</button></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><h2>Who voted for what</h2></div>
+      <div class="who" id="all-votes"><p class="note">Loading…</p></div>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><h2>Suggest another place</h2><p class="muted">A ski town plus a nearby city works best.</p></div>
+      <form class="form" id="suggest-form" autocomplete="off">
+        <div class="row">
+          <label for="sg-place">Place <span>e.g. "Chamonix + Geneva"</span>
+            <input id="sg-place" name="place" maxlength="60" required>
+          </label>
+          <label for="sg-link">Link <span>Optional, https:// only</span>
+            <input id="sg-link" name="link" maxlength="300" inputmode="url" placeholder="https://">
+          </label>
+        </div>
+        <label for="sg-why">Why <span>One or two sentences</span>
+          <textarea id="sg-why" name="why" maxlength="240"></textarea>
+        </label>
+        <div class="form-foot">
+          <span class="small muted" id="sg-hint">Up to 5 suggestions each.</span>
+          <button class="btn primary" type="submit" id="sg-submit">Add suggestion</button>
+        </div>
+      </form>
+      <div class="vopts" id="vote-sugg"></div>
+    </section>
+  </div>
+
+  <div class="view" data-view="plan" id="v-plan" hidden></div>
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<footer>
+  <div class="wrap">Don's Bachelor Trip · planning estimates as of Nov 1, 2026. Check live prices before booking. Destination photos from Wikimedia Commons; lodging photos from each property's own website. Credits on the <a href="#plan">Plan</a> page.</div>
+</footer>
+
+<script>
+(() => {
+"use strict";
+const $ = (s, el = document) => el.querySelector(s);
+const h = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+const CREDITS = {
+  "whistler-alt": ["Murray Foubister", "CC BY-SA 2.0", "https://commons.wikimedia.org/wiki/File:2010-4_Whistler-Blackcomb_day_trip_(16127495416).jpg", "Whistler Blackcomb"],
+  "whistler": ["Ruth Hartnup", "CC BY 2.0", "https://commons.wikimedia.org/wiki/File:Skiing_above_the_clouds_(16261273396).jpg", "Skiing above the clouds"],
+  "vancouver": ["Quintin Soloviev", "CC BY 4.0", "https://commons.wikimedia.org/wiki/File:Skyline_of_Vancouver,_BC.jpg", "Vancouver skyline"],
+  "lakelouise": ["Rschroeder1985", "CC0", "https://commons.wikimedia.org/wiki/File:Frozen_Lake_Louise_in_Banff_1.jpg", "Frozen Lake Louise"],
+  "banff": ["Tj Holowaychuk", "CC0", "https://commons.wikimedia.org/wiki/File:Mist_Over_Banff_Avenue_(Unsplash).jpg", "Mist over Banff"],
+  "calgary": ["Mule hollandaise", "CC BY 4.0", "https://commons.wikimedia.org/wiki/File:Calgary_Skyline_from_the_river.jpg", "Calgary skyline"],
+  "penken": ["Eiswind", "CC BY-SA 3.0", "https://commons.wikimedia.org/wiki/File:Penken1.jpg", "Penken summit, Mayrhofen"],
+  "zillertal": ["Tiia Monto", "CC BY-SA 3.0", "https://commons.wikimedia.org/wiki/File:Hintertux_Glacier_downhill_skiing.jpg", "Hintertux Glacier"],
+  "munich": ["Stefan Kühn", "CC BY-SA 3.0", "https://commons.wikimedia.org/wiki/File:Munich_skyline.jpg", "Munich skyline"],
+  "grandvalira": ["Alberto-g-rovi", "CC BY 3.0", "https://commons.wikimedia.org/wiki/File:Grandvalira_Ski_Center_(AND)_2021.jpg", "Grandvalira, Andorra"],
+  "barcelona-view": ["Alexey Komarov", "CC BY-SA 4.0", "https://commons.wikimedia.org/wiki/File:Barcelona,_View_from_Bunkers_del_Carmel.jpg", "Barcelona from the Bunkers del Carmel"],
+  "barcelona": ["Alvesgaspar", "CC BY-SA 4.0", "https://commons.wikimedia.org/wiki/File:Sagrada_Familia_March_2015-10a.jpg", "Sagrada Família ceiling"]
+};
+const img = k => `img/${k}.jpg`;
+const credit = k => CREDITS[k] ? `Photo: ${CREDITS[k][0]} · ${CREDITS[k][1]}` : "";
+
+const WEEK_NA = [["Sat 20", "Fly in, city", "city"], ["Sun 21", "To mountain", "travel"], ["Mon 22", "Ski 1", "ski"], ["Tue 23", "Ski 2", "ski"], ["Wed 24", "Ski 3", "ski"], ["Thu 25", "To city", "travel"], ["Fri 26", "City", "city"], ["Sat 27", "City, big night", "city"], ["Sun 28", "Fly home", "travel"]];
+
+const DEST = {
+whistler: {
+  name: "Whistler + Vancouver", short: "Whistler", region: "British Columbia, Canada", tag: "Top pick", top: true,
+  hero: "whistler-alt", ski: "whistler", city: "vancouver", cityName: "Vancouver",
+  tagline: "North America's biggest ski area, then a big-city weekend with a Canucks game.",
+  lo: 2050, hi: 3200, allIn: "$2,050–3,200", pre: "$1,750–2,650", fly: "YVR", effort: ["blue"], effortText: "2 hr bus to the mountain",
+  card: ["Walk from condo to gondola to bar", "Canucks home game Sat Feb 27", "No car, weak Canadian dollar"],
+  verdict: "The best all-round trip. You walk from the condo to the gondola to the bar, nobody drives, and the weekend ends at a Canucks game. The weak Canadian dollar keeps it close to Banff on price.",
+  pros: ["8,171 acres on 2 mountains, linked by the Peak 2 Peak gondola", "Walkable village with the best après and nightlife of the four", "Vancouver is a real city: great food, Canucks at home Sat Feb 27", "No car needed, and 1 CAD ≈ $0.71"],
+  cons: ["Coastal snow: a warm storm can mean rain at the village base", "Whistler lodging costs more than Banff", "2-hour bus each way"],
+  facts: [["Ski days", "Mon–Wed"], ["Lift pass", "Epic Day Pass, 3 days ≈ $386"], ["City", "Vancouver, 4 nights"], ["Feb weather", "Village 37°/25°F · Vancouver 46°/36°F, rainy"]],
+  week: WEEK_NA,
+  costs: [["Epic Day Pass, 3 days, all resorts", "$386–430"], ["Whistler lodging, 4 nights", "$250–450"], ["Vancouver hotel, 4 nights", "$280–415"], ["SkyTrain + bus both ways", "$80–125"], ["Ski/board rental, 3 days", "$130–180"], ["Food and drinks, 8 days", "$480–680"], ["Activities and nightlife", "$150–350"], ["Subtotal before flights", "$1,750–2,650", "sub"], ["Round-trip flight to YVR (est.)", "$300–550"], ["All-in", "$2,050–3,200", "total"]],
+  costNote: "Converted at 1 CAD ≈ $0.71. BC lodging taxes (GST, PST and municipal tax, about 17%) are included.",
+  stays: [
+    ["Whistler", "Sun Feb 21 – Thu Feb 25", [
+      ["Tantalus Resort Lodge", true, "2-bed, 2-bath suites (84 m²) with a full kitchen. Each sleeps 6: a queen, two twins and a double sofa bed. About 5 minutes' walk to the Village Gondola. Parking CAD 25/night.", "est. CAD 450–650/night per suite · 1 suite ≈ $250–360 pp · 2 suites ≈ $440–665 pp"],
+      ["Pangea Pod Hotel", false, "Private sleeping pods in the middle of the village, with a rooftop bar. Social and fun for a group. No kitchen.", "est. CAD 120–200 per pod/night ≈ $340–570 pp"],
+      ["Aava Whistler Hotel", false, "Village North. Rooms with 2 queens, a pool and a hot tub. Book 3 rooms.", "est. CAD 280–420/room ≈ $400–600 pp"],
+      ["Airbnb / VRBO condo", false, "Search Whistler Village, Village North or Upper Village: 3+ bedrooms, sleeps 6, hot tub.", "expect CAD 750–1,100/night + cleaning ≈ $440–660 pp"]]],
+    ["Vancouver", "Sat Feb 20, then Thu Feb 25 – Sat Feb 27", [
+      ["Sandman Hotel Vancouver City Centre", true, "Rooms with 2 queens, a 5-minute walk to Rogers Arena, with the Shark Club sports bar in the building.", "est. CAD 170–240/room × 3 ≈ $280–400 pp for 4 nights"],
+      ["Hotel Belmont", false, "Right on the Granville Street nightlife strip.", "est. CAD 170–260/room ≈ $280–430 pp"],
+      ["Days Inn by Wyndham Vancouver Downtown", false, "On the edge of Gastown. The cheapest central option.", "est. CAD 150–210/room ≈ $250–350 pp"]]]
+  ],
+  stayNote: "Book a hotel in Vancouver. The city only allows short-term rentals in the host's own home, so whole-place Airbnbs for 6 are rare. Whistler is exempt, so condos there are easy to find.",
+  getting: ["YVR → downtown: Canada Line SkyTrain, about 25 minutes and CAD 10 with the airport add-fare.", "Vancouver ↔ Whistler: Epic Rides bus from downtown, about 2 hours up the Sea-to-Sky Highway, around CAD 25–35 each way. Skylynx is CAD 32–35 from downtown or CAD 55–65 straight from the airport.", "In Whistler: walk. Both gondolas leave from the village.", "Flying home: YVR has US preclearance, so you clear US customs before boarding. Get there 3 hours early."],
+  skiDays: [
+    ["Mon Feb 22", "Whistler Mountain", "Warm up on the lower chairs, then Peak Express and the Symphony and Harmony bowls if the alpine is open.", "Roundhouse Lodge at the top of the gondola", "Garibaldi Lift Co. (GLC) at the gondola base"],
+    ["Tue Feb 23", "Blackcomb", "Ride Peak 2 Peak across, then 7th Heaven and the long Blackcomb Glacier run. Strong skiers: Spanky's Ladder into the bowls.", "Rendezvous Lodge", "Merlin's at the Blackcomb base, then the bachelor dinner"],
+    ["Wed Feb 24", "Best snow + spa", "Ski the morning wherever the snow is best and quit around 1 pm.", "Peaked Pies in the village", "Scandinave Spa or the Olympic bobsleigh, then Longhorn and Buffalo Bill's"]
+  ],
+  cityIntro: "Four nights split across both Saturdays. Stay downtown near Rogers Arena and Granville Street and you can walk to almost everything. February is rainy, so the list mixes outdoor and indoor plans.",
+  acts: [
+    ["Canucks vs Flames", "Must-do", "Sat Feb 27 · 7 pm", "CAD 90–250", "Rogers Arena, 5 minutes from the Sandman. There's also a home game on arrival night, Sat Feb 20 vs the Avalanche.", "Buy on Ticketmaster in January; the upper bowl is fine. Confirm dates on NHL.com."],
+    ["Seaplane over the city", "Splurge", "Fri Feb 26 · morning", "~CAD 200–275 pp", "Harbour Air's 20-minute panorama flight from Coal Harbour over Stanley Park, the harbour and the North Shore mountains.", "Book a morning slot; flights move if the weather is bad."],
+    ["Granville Island", "Easy day", "Fri Feb 26 · midday", "Free · beer flight ~CAD 15–20", "Public Market for lunch, Granville Island Brewing's taproom, then the little Aquabus ferry across False Creek (about CAD 5).", "Go before 2 pm when the market is at its best."],
+    ["Stanley Park seawall by bike", "Outdoors", "Fri Feb 26 · if dry", "~CAD 15/hr rental", "A flat 10 km loop around the park with ocean and mountain views. Rentals at Denman and Georgia.", "Skip it if it's pouring; FlyOver Canada (~CAD 35) is the indoor backup."],
+    ["Grouse Mountain at night", "Views", "Thu Feb 25 · evening", "~CAD 75–90", "Gondola 15 minutes from downtown. City lights below, night skiing, snowshoe trails and a bar at the top.", "Take the free shuttle from Canada Place."],
+    ["Brewery Creek crawl", "Drinks", "Thu Feb 25 · evening", "~CAD 8–10 a pint", "Mount Pleasant's brewery strip on and around Main Street: 33 Acres, Brassneck and Main Street Brewing are all walkable.", "Cab back; it's 10 minutes from downtown."],
+    ["Gastown night", "Night", "Thu Feb 25 · late", "Cocktails CAD 16–20", "Cobblestone old town: The Diamond for cocktails, Guilt & Co. for live music under the street, Steamworks Brew Pub for pints.", "Guilt & Co. fills up after 10 pm on weekends."],
+    ["Granville Street big night", "Big night", "Fri Feb 26 · late", "Cover CAD 10–25", "The Roxy has live cover bands and is a classic bachelor-party spot. Celebrities is the big club.", "Get to The Roxy before 10:30 pm to skip the line."],
+    ["Richmond food crawl", "Food", "Sat Feb 27 · day", "CAD 20–40 pp", "Canada Line 25 minutes south for the best Chinese food in North America: dim sum, then Alexandra Road's 'Food Street'.", "Dim sum is first-come; go by 11 am."],
+    ["Axe throwing", "Rainy day", "Sat Feb 27 · afternoon", "~CAD 40–50 pp", "BATL in Vancouver: an hour of throwing with a coach, good for groups.", "Book a lane for 6 in advance."]
+  ],
+  eat: [
+    ["Cheap eats", [["El Furniture Warehouse", "$", "Whistler: whole menu around CAD 10"], ["Purebread", "$", "Whistler bakery, grab before first chair"], ["Splitz Grill", "$", "Whistler burgers"], ["Phnom Penh", "$$", "Vancouver: legendary Cambodian wings"], ["Japadog", "$", "Vancouver street hot dogs"]]],
+    ["Après", [["Garibaldi Lift Co.", "$$", "Gondola base, the default first stop"], ["Longhorn Saloon", "$$", "Big patio at the base"], ["Merlin's", "$$", "Blackcomb base"], ["Dusty's", "$$", "Creekside, more local"]]],
+    ["Late", [["Garfinkel's", "", "Whistler's main club"], ["Buffalo Bill's", "", "Whistler, older crowd, big dance floor"], ["The Roxy", "", "Vancouver live cover bands"], ["Celebrities", "", "Vancouver big club"]]],
+    ["Bachelor dinner", [["Hy's Steakhouse", "$$$", "Whistler classic steakhouse"], ["The Keg", "$$$", "Whistler, reliable for big groups"], ["Hunter Gather", "$$", "Budget pick: smokehouse BBQ"], ["Miku", "$$$", "Vancouver aburi sushi"]]]
+  ],
+  itin: [
+    ["Sat Feb 20", "city", "Fly into YVR, Canada Line downtown, check in at the Sandman. Canucks vs Avalanche at 7 pm, then Granville Street.", "Vancouver"],
+    ["Sun Feb 21", "travel", "Late brunch, late-morning Epic Rides bus to Whistler. Check in, grocery run at Nesters Market, pick up rental gear. Dinner at El Furniture Warehouse.", "Whistler"],
+    ["Mon Feb 22", "ski", "Ski day 1: Whistler Mountain. Après at GLC.", "Whistler"],
+    ["Tue Feb 23", "ski", "Ski day 2: Blackcomb and Peak 2 Peak. Après at Merlin's, bachelor dinner, Garfinkel's.", "Whistler"],
+    ["Wed Feb 24", "ski", "Ski day 3: morning laps, Scandinave Spa or bobsleigh in the afternoon. Last night at Longhorn and Buffalo Bill's.", "Whistler"],
+    ["Thu Feb 25", "travel", "Breakfast at Purebread, midday bus to Vancouver. Grouse Mountain at night or a Brewery Creek crawl, then Gastown.", "Vancouver"],
+    ["Fri Feb 26", "city", "Seaplane flight, Granville Island lunch and brewery, seawall bike ride. Big night: steak dinner, then The Roxy.", "Vancouver"],
+    ["Sat Feb 27", "city", "Recovery dim sum in Richmond, axe throwing if it rains. Canucks vs Flames at 7 pm.", "Vancouver"],
+    ["Sun Feb 28", "travel", "Fly home. Arrive at YVR 3 hours early for US preclearance.", "Home"]
+  ],
+  watch: ["Whistler is capping daily lift tickets in 2026/27. Buy the Epic Day Pass early, not at the window.", "Passports needed for everyone.", "The cheapest Tantalus setup puts all 6 in one suite: two share the queen and two take the sofa bed. Two suites cost about $200 more each."],
+  compare: { lifts: "$386", skiing: "8,171 acres, 2 mountains", cityC: "Vancouver: Canucks Sat Feb 27", risk: "Rain at the village base" }
+},
+banff: {
+  name: "Banff + Calgary", short: "Banff", region: "Alberta, Canada", tag: "Budget pick",
+  hero: "lakelouise", ski: "banff", city: "calgary", cityName: "Calgary",
+  tagline: "The cheapest trip, the best views, and three resorts on one ticket.",
+  lo: 1800, hi: 2900, allIn: "$1,800–2,900", pre: "$1,500–2,350", fly: "YYC", effort: ["blue"], effortText: "90 min drive to Banff",
+  card: ["Cheapest of the four", "3 resorts on one ticket, free shuttles", "Lacrosse and cowboy bars in Calgary"],
+  verdict: "The cheapest trip on the list and the best scenery. February is Banff's lowest hotel-rate month, one SkiBig3 ticket covers three resorts with free shuttles from Banff hotels, and the Canadian dollar does the rest. The tradeoffs are real cold, a rental car, and a city half in Calgary, which is fun but smaller.",
+  pros: ["Cheapest all-in of the four", "Sunshine, Lake Louise and Norquay on one ticket, with free ski shuttles", "Banff town is lively at night", "February is low season for Banff hotels"],
+  cons: ["Cold: overnight lows around 7°F, with snaps to −13°F", "You need a 7–8 seat rental car", "Calgary is fun, but it isn't Vancouver"],
+  facts: [["Ski days", "Mon–Wed"], ["Lift pass", "SkiBig3, 3 days ≈ $300–370"], ["City", "Calgary, 4 nights"], ["Feb weather", "Banff 28°/7°F · Calgary 30°/10°F"]],
+  week: WEEK_NA,
+  costs: [["SkiBig3 3-day ticket (online, 21+ days ahead)", "$300–370"], ["Banff lodging, 4 nights", "$235–375"], ["Calgary lodging, 4 nights", "$150–300"], ["7–8 seat SUV, gas, park pass", "$125–190"], ["Ski/board rental, 3 days", "$105–150"], ["Food and drinks, 8 days", "$425–625"], ["Activities and nightlife", "$150–350"], ["Subtotal before flights", "$1,500–2,350", "sub"], ["Round-trip flight to YYC (est.)", "$300–550"], ["All-in", "$1,800–2,900", "total"]],
+  costNote: "SkiBig3 3-day is about CAD 418 booked early versus CAD 500–600 at the window. Alberta lodging tax plus Banff's destination fee add about 13%.",
+  stays: [
+    ["Banff", "Sun Feb 21 – Thu Feb 25", [
+      ["Hidden Ridge Resort", true, "Condo-style 1–2 bedroom units with full kitchens and wood fireplaces, plus outdoor hot pools. On Tunnel Mountain, on the ski shuttle route. Book 2 units.", "est. CAD 250–400/unit ≈ $235–375 pp"],
+      ["Douglas Fir Resort & Chalets", false, "Kitchen suites and lofts, indoor waterslides, a ski shuttle stop.", "est. CAD 220–380/unit × 2 ≈ $210–360 pp"],
+      ["Banff Aspen Lodge", false, "Downtown on Banff Avenue, outdoor hot tubs, breakfast included. Rooms with 2 queens.", "est. CAD 170–260/room × 3 ≈ $270–420 pp"],
+      ["Samesun Banff", false, "Hostel with a bar on site. The rock-bottom option.", "dorm beds ~CAD 50–80/night ≈ $140–230 pp"]]],
+    ["Calgary", "Sat Feb 20, then Thu Feb 25 – Sat Feb 27", [
+      ["Airbnb house in Beltline, Mission or Inglewood", true, "3–4 bedrooms, walking distance to the 17th Avenue bars.", "expect CAD 220–320/night ≈ $150–200 pp for 4 nights"],
+      ["Hotel Arts", false, "Boutique hotel in Beltline with a pool. Rooms with 2 queens.", "est. CAD 180–260/room × 3 ≈ $260–380 pp"],
+      ["Sandman Hotel Calgary City Centre", false, "Budget downtown hotel with 2-queen rooms.", "est. CAD 140–190/room × 3 ≈ $220–300 pp"]]]
+  ],
+  stayNote: "Canmore alternative: 2-bed condos at Stoneridge Mountain Resort or Blackstone Mountain Lodge sleep 6 for about CAD 280–450/night, but the free ski shuttles leave from Banff hotels, not Canmore.",
+  getting: ["Fly into Calgary (YYC). Banff is 90 minutes west on the Trans-Canada Highway.", "Rent one 7–8 seat SUV or minivan for the week, about CAD 100–160/day. Ask for winter tires.", "Parks Canada pass: required inside Banff National Park. A family/group daily pass covers up to 7 people in one vehicle, about CAD 23/day.", "In Banff, park the car. The SkiBig3 shuttle to all three resorts is free with your ticket from Banff hotels.", "Flying home: YYC has US preclearance. Get there 3 hours early."],
+  skiDays: [
+    ["Mon Feb 22", "Banff Sunshine", "Free shuttle from the hotel, about 25 minutes. Gondola up, then Lookout Mountain and Goat's Eye. Experts: Delirium Dive needs a beacon, shovel and partner.", "Mad Trapper's Saloon in the old log lodge", "Mad Trapper's, then Wild Bill's in town"],
+    ["Tue Feb 23", "Lake Louise", "About 45 minutes on the shuttle. Groomers on the front side in the morning, then the back bowls once the sun hits them.", "Temple Lodge", "Lodge of the Ten Peaks, then skate the frozen lake in front of the Fairmont"],
+    ["Wed Feb 24", "Norquay + afternoon off", "Norquay is 10 minutes from town. Ski the morning, then the Johnston Canyon ice walk or dog sledding in the afternoon.", "Cliffhouse Bistro at Norquay's mid-station", "High Rollers: bowling, pizza and arcade games"]
+  ],
+  cityIntro: "Calgary gets the arrival night and the last three nights. It's a cowboy-bar city with a good food scene and cheap hotels. A few Banff extras for the mountain days are at the end of the list.",
+  acts: [
+    ["Roughnecks lacrosse", "Must-do", "Sat Feb 27 · 7 pm", "~CAD 30–80", "Pro box lacrosse at the Saddledome vs Oshawa. Loud, fast, cheap seats, beer in hand.", "This date comes from TSN's broadcast schedule. Confirm on calgaryroughnecks.com."],
+    ["Cowboys Dance Hall", "Big night", "Sat Feb 20 & Fri Feb 26", "Cover ~CAD 10–20", "The Calgary bachelor-party institution: a country bar with a big dance floor.", "Lines build after 10:30 pm; get there early."],
+    ["Major Tom", "Bachelor dinner", "Fri Feb 26 · dinner", "$$$", "Steakhouse and cocktail bar on the 40th floor downtown, with the whole city lit up below.", "Book a table for 6 a month ahead; ask for the window."],
+    ["Kananaskis Nordic Spa", "Recovery", "Fri Feb 26 · day", "~CAD 110–130", "Outdoor hot pools, saunas and cold plunges in the mountains, about an hour west.", "Weekday entry is easier to get; book a time slot."],
+    ["Flames vs Senators", "Option", "Sun Feb 21 · 5 pm", "~CAD 80–200", "The only Flames home game in your window. To catch it, stay in Calgary Sunday and drive to Banff early Monday.", "Ski Monday still works: Sunshine is 90 minutes from Calgary."],
+    ["Inglewood breweries", "Drinks", "Thu Feb 25 · evening", "~CAD 8–10 a pint", "Calgary's oldest neighborhood. Cold Garden is a huge, rowdy taproom with games, and the strip has live-music bars.", "Walkable from Beltline on a mild night."],
+    ["17th Avenue crawl", "Night", "Thu or Sat · late", "Pints ~CAD 8–10", "Start at the Ship & Anchor, a classic pub, then work down the strip.", "Easy walk from a Beltline Airbnb."],
+    ["Studio Bell", "Rainy day", "Sat Feb 27 · day", "~CAD 25", "The National Music Centre: a huge music museum where you can play the instruments.", "About 2 hours is plenty."],
+    ["Banff Upper Hot Springs", "Banff", "Sun Feb 21", "~CAD 17", "Soak in a hot pool looking at the mountains. The best first afternoon in Banff.", "Go at dusk; it's quieter."],
+    ["Dog sledding or ice walk", "Banff", "Wed Feb 24 · afternoon", "~CAD 90–350", "A guided Johnston Canyon ice walk (about CAD 90) or a dog-sled run near Canmore (CAD 200–350).", "Book both 3–4 weeks out."]
+  ],
+  eat: [
+    ["Cheap eats", [["Wild Flour Bakery", "$", "Banff breakfast"], ["Bear Street Tavern", "$$", "Banff pizza"], ["Magpie & Stump", "$$", "Banff Mexican"], ["Native Tongues Taquería", "$$", "Calgary tacos"]]],
+    ["Après", [["Mad Trapper's Saloon", "$$", "Sunshine Village"], ["Lodge of the Ten Peaks", "$$", "Lake Louise"], ["Park Distillery", "$$", "Banff: campfire food, house spirits"]]],
+    ["Late", [["Wild Bill's Legendary Saloon", "", "Banff line dancing"], ["Dancing Sasquatch", "", "Banff club"], ["High Rollers", "", "Banff bowling and pizza"], ["Cowboys Dance Hall", "", "Calgary"]]],
+    ["Bachelor dinner", [["The Grizzly House", "$$$", "Banff fondue: bison, elk, alligator, and a phone at every table"], ["Major Tom", "$$$", "Calgary, 40th floor"], ["Caesar's Steak House", "$$$", "Calgary classic"]]]
+  ],
+  itin: [
+    ["Sat Feb 20", "city", "Fly into YYC, pick up the SUV, check in to the Calgary Airbnb. Tacos at Native Tongues, then Cowboys.", "Calgary"],
+    ["Sun Feb 21", "travel", "Drive to Banff and buy the park pass at the gate. Upper Hot Springs, wander Banff Avenue. Grizzly House fondue dinner.", "Banff"],
+    ["Mon Feb 22", "ski", "Ski day 1: Banff Sunshine on the free shuttle. Après at Mad Trapper's, night at Wild Bill's.", "Banff"],
+    ["Tue Feb 23", "ski", "Ski day 2: Lake Louise back bowls, then skate the frozen lake. Park Distillery dinner.", "Banff"],
+    ["Wed Feb 24", "ski", "Ski day 3: Norquay morning, then the ice walk or dog sledding. High Rollers.", "Banff"],
+    ["Thu Feb 25", "travel", "Breakfast in Canmore, drive to Calgary. Inglewood breweries.", "Calgary"],
+    ["Fri Feb 26", "city", "Kananaskis Nordic Spa, back for the bachelor dinner at Major Tom, then Cowboys.", "Calgary"],
+    ["Sat Feb 27", "city", "Studio Bell, then the Roughnecks at the Saddledome at 7 pm. 17th Avenue after.", "Calgary"],
+    ["Sun Feb 28", "travel", "Return the SUV, fly home from YYC.", "Home"]
+  ],
+  watch: ["Banff averages about 7°F overnight in February, and snaps to −13°F happen. Lake Louise runs colder than Sunshine. Pack face masks and hand warmers.", "Watch for wildlife and black ice on the highway after dark.", "SkiBig3 delivers tickets to hotels, not Airbnbs. Pick them up at the resort instead."],
+  compare: { lifts: "$300–370", skiing: "3 resorts, ~7,700 acres", cityC: "Calgary: lacrosse, cowboy bars", risk: "Cold snaps to −13°F" }
+},
+alps: {
+  name: "Mayrhofen + Munich", short: "Alps", region: "Austria + Germany", tag: "Wildcard",
+  hero: "penken", ski: "zillertal", city: "munich", cityName: "Munich",
+  tagline: "Austrian après, then Munich's strong-beer festival on opening weekend.",
+  lo: 1850, hi: 3250, allIn: "$1,850–3,250", pre: "$1,250–2,150", fly: "MUC", effort: ["black", "black"], effortText: "Overnight flight + train",
+  card: ["$272 lift pass, cheap pensions", "Munich Starkbierfest opens Fri Feb 26", "Dutch and French school-holiday crowds"],
+  verdict: "The best value once you land, and Munich lines up perfectly: the Starkbierfest at Nockherberg opens Fri Feb 26, your first full night back in the city. The catches are a $600–1,100 flight, a lost Sunday, and a Dutch and French school holiday the same week, so book lodging now if this one wins.",
+  pros: ["3-day lift pass for $272, about half the North American price", "Munich's strong-beer festival opens Feb 26 and runs to Mar 21", "Mayrhofen's Ice Bar is one of the best après spots in the Alps", "Trains everywhere, no car"],
+  cons: ["Flights cost $600–1,100", "Overnight flight, so the first ski day is Monday", "Dutch and French school holidays the same week"],
+  facts: [["Ski days", "Mon–Wed"], ["Lift pass", "Zillertaler Superskipass €241 ≈ $272"], ["City", "Munich, 3 nights"], ["Feb weather", "Mayrhofen 39°/21°F · Munich 41°/27°F"]],
+  week: [["Sat 20", "Overnight flight", "travel"], ["Sun 21", "Land, to Mayrhofen", "travel"], ["Mon 22", "Ski 1", "ski"], ["Tue 23", "Ski 2", "ski"], ["Wed 24", "Ski 3", "ski"], ["Thu 25", "Innsbruck → Munich", "travel"], ["Fri 26", "Starkbierfest", "city"], ["Sat 27", "Munich, big night", "city"], ["Sun 28", "Fly home", "travel"]],
+  costs: [["Zillertaler Superskipass, 3 days (€241)", "$272"], ["Mayrhofen lodging, 4 nights", "$180–350"], ["Munich lodging, 3 nights", "$90–290"], ["Trains and local transit", "$100–165"], ["Ski/board rental, 3 days (online)", "$120–170"], ["Food and drinks, 8 days", "$410–580"], ["Activities and nightlife", "$100–300"], ["Subtotal before flights", "$1,250–2,150", "sub"], ["Round-trip flight to MUC (est.)", "$600–1,100"], ["All-in", "$1,850–3,250", "total"]],
+  costNote: "Only 7 nights of lodging, since Saturday night is on the plane. Converted at €1 ≈ $1.13. The Superskipass covers 546 km of pistes and 180 lifts, including the Hintertux Glacier.",
+  stays: [
+    ["Mayrhofen", "Sun Feb 21 – Thu Feb 25", [
+      ["Family-run pension with breakfast", true, "For example Hotel-Gasthof Perauer, central and a few minutes from the Penkenbahn. Book 3 twin rooms. Pensions take 4-night stays more readily than apartments do.", "est. €90–150/room/night ≈ $215–350 pp"],
+      ["Self-catering apartment for 6", false, "2–3 bedrooms with a kitchen. In high season many only rent Saturday to Saturday, so filter for flexible arrival.", "est. €200–320/night ≈ $180–270 pp"],
+      ["Hotel Strass", false, "Home of the Ice Bar, Mayrhofen's main après spot. Pricier with half-board, but you sleep on top of the party.", "the most expensive option"]]],
+    ["Munich", "Thu Feb 25 – Sat Feb 27", [
+      ["MEININGER Hotel München City Center", true, "Private en-suite rooms for up to 6 near Hackerbrücke, a 10-minute walk to the main station and the Augustiner-Keller.", "est. €150–280/night for a 6-bed room ≈ $90–160 pp"],
+      ["a&o München Hackerbrücke", false, "Same idea, often cheaper.", "est. €130–250/night per 6-bed room"],
+      ["A 3-star with twin rooms", false, "For example a Holiday Inn Express. Book 3 rooms.", "est. €110–170/room ≈ $185–290 pp"]]]
+  ],
+  stayNote: "Austria adds a tourist tax of about €2.60 per person per night on top of the room.",
+  getting: ["Fly into Munich (MUC). Overnight flights from the US land Sunday morning.", "MUC → Mayrhofen: train via Munich Ost and Jenbach, then the Zillertalbahn. About 3.5–4 hours, €35–65 per person. A pre-booked van takes about 2 hours for €350–450 for the group.", "In the valley: free ski buses link the Zillertal areas with the Superskipass.", "Mayrhofen → Innsbruck → Munich by train: about 1 hour, then 1h45, €25–50 per person on saver fares.", "ETIAS: the EU's €20 travel authorization has slipped into 2027 and should start with a grace period. It's unlikely to apply, but check before you fly."],
+  skiDays: [
+    ["Mon Feb 22", "Penken + Harakiri", "The Penkenbahn leaves from the middle of town. Cruise the Penken, then try Harakiri, Austria's steepest groomed run at 78%.", "Schneekarhütte on the Horberg: Kaiserschmarrn and a view", "Ice Bar at the bottom of the Penkenbahn"],
+    ["Tue Feb 23", "Hintertux Glacier", "Free ski bus up the valley, about 45 minutes. Skiing up to 3,250 m, the snow-sure option.", "Tuxer Fernerhaus at the glacier", "Brück'n Stadl back in Mayrhofen"],
+    ["Wed Feb 24", "Ahorn or Hochzillertal", "Ahorn is the wide, mellow mountain across town. Hochzillertal is a short ride down the valley for variety.", "Wedelhütte on Hochzillertal", "Last night: Ice Bar, then Arena Club"]
+  ],
+  cityIntro: "Three nights, Thursday to Saturday, and the timing is lucky: the Starkbierfest opens at Paulaner's hall on Nockherberg on Fri Feb 26. Stay near Hackerbrücke or the main station; everything below is a short U-Bahn ride.",
+  acts: [
+    ["Starkbierfest at Nockherberg", "Must-do", "Fri Feb 26 · opening day", "Free entry · ~€15 a liter", "Paulaner's strong-beer festival: Salvator doppelbock (about 7.9%) by the liter, brass bands and long benches. It runs Feb 26 – Mar 21, 2027.", "Reserve a table for 6 on Paulaner's site in January. Dates per munich.travel; confirm with Paulaner."],
+    ["Augustiner-Keller", "Beer hall", "Thu Feb 25 · evening", "~€13–15 a liter", "The locals' favorite beer hall, a 10-minute walk from Hackerbrücke. Your first night in Munich.", "The indoor halls are open all winter."],
+    ["Hofbräuhaus", "Classic", "Fri Feb 26 · lunch", "~€15 a liter", "Touristy and loud, and you have to go once. Lunch beats the evening crush.", "Grab any empty spot on a shared bench."],
+    ["Weisswurst breakfast", "Food", "Fri Feb 26 · morning", "~€10", "Viktualienmarkt: white sausage, a pretzel, sweet mustard and a wheat beer before noon, the Bavarian way.", "Locals say weisswurst should never hear the noon bells."],
+    ["Eisbach surfers", "Free", "Fri Feb 26 · morning", "Free", "Surfers ride a standing river wave at the edge of the Englischer Garten, even in February.", "10 minutes' walk from Viktualienmarkt via the Hofgarten."],
+    ["Therme Erding", "Recovery", "Sat Feb 27 · day", "€59 weekends", "Europe's biggest thermal spa and slide park, 45 minutes by S-Bahn. The hangover cure.", "Weekdays are €52; go early to get loungers."],
+    ["Innsbruck stopover", "Day trip", "Thu Feb 25 · midday", "~€45 return", "On the train from Mayrhofen, drop bags at the station and take the Nordkette cable car from the old town to 2,256 m in about 20 minutes.", "Lockers at Innsbruck Hauptbahnhof."],
+    ["BMW Welt + Museum", "Rainy day", "Sat Feb 27 · day", "Welt free · Museum ~€12", "The showroom is free and fun; the museum next door covers 100 years of cars and bikes.", "Next to the Olympiapark, on the U3."],
+    ["Glockenbach night out", "Big night", "Sat Feb 27 · late", "Cocktails €12–16", "Bars around Gärtnerplatz, then Harry Klein for techno or P1 if you dress up.", "P1 has a strict door. Shirts with collars."],
+    ["Bayern on TV", "Sports", "Fri/Sat", "Free", "Bayern play away at Leipzig that weekend. Watch it in a beer hall with the locals.", "Kickoff time is set a few weeks before."]
+  ],
+  eat: [
+    ["Cheap eats", [["Viktualienmarkt stalls", "$", "Munich market lunch"], ["Supermarket breakfast", "$", "MPreis or Spar in Mayrhofen; beer about €1.50"], ["Kaiserschmarrn on the mountain", "$", "Shredded pancake, the hut classic"]]],
+    ["Après", [["Ice Bar, Hotel Strass", "$$", "Bottom of the Penkenbahn"], ["Brück'n Stadl", "$$", "Mayrhofen après barn"]]],
+    ["Late", [["Arena Club", "", "Mayrhofen"], ["Scotland Yard", "", "Mayrhofen pub"], ["Harry Klein", "", "Munich techno"], ["P1", "", "Munich, dress up"]]],
+    ["Bachelor dinner", [["Schneider Bräuhaus", "$$", "Pork knuckle and weissbier"], ["Starkbierfest table", "$$", "Book a table for the night"], ["Augustiner-Keller", "$$", "Roast chicken by the half"]]]
+  ],
+  itin: [
+    ["Sat Feb 20", "travel", "Overnight flight to Munich.", "Plane"],
+    ["Sun Feb 21", "travel", "Land around 8 am, train or van to Mayrhofen. Pick up rentals, Ice Bar après, early night.", "Mayrhofen"],
+    ["Mon Feb 22", "ski", "Ski day 1: Penken and Harakiri. Ice Bar and Brück'n Stadl.", "Mayrhofen"],
+    ["Tue Feb 23", "ski", "Ski day 2: Hintertux Glacier on the free ski bus.", "Mayrhofen"],
+    ["Wed Feb 24", "ski", "Ski day 3: Ahorn or Hochzillertal. Last night at Arena Club.", "Mayrhofen"],
+    ["Thu Feb 25", "travel", "Train to Innsbruck for the Nordkette and lunch, then on to Munich. Augustiner-Keller.", "Munich"],
+    ["Fri Feb 26", "city", "Weisswurst breakfast, Eisbach surfers, Hofbräuhaus lunch. Opening night at the Starkbierfest.", "Munich"],
+    ["Sat Feb 27", "city", "Therme Erding to recover. Schneider Bräuhaus dinner, then a big night in Glockenbach.", "Munich"],
+    ["Sun Feb 28", "travel", "Fly home from MUC. Afternoon departures land in the US the same day.", "Home"]
+  ],
+  watch: ["School holidays: Dutch spring break (North and Central regions) is exactly Feb 20–28, French Zone A runs Feb 13–Mar 1 and Zone B Feb 20–Mar 8. Expect full lodging and weekend lift lines. Book now.", "If the dates could move, Mar 6–14 avoids most of it and is cheaper.", "Jet lag: the first ski day is Monday, not Sunday."],
+  compare: { lifts: "$272", skiing: "546 km of pistes + glacier", cityC: "Munich: Starkbierfest opens Feb 26", risk: "School-holiday crowds" }
+},
+barcelona: {
+  name: "Barcelona + Andorra", short: "Barcelona", region: "Spain + Andorra", tag: "New: Europe #2",
+  hero: "grandvalira", ski: "grandvalira", city: "barcelona-view", cityExtra: "barcelona", cityName: "Barcelona",
+  tagline: "Duty-free skiing in the Pyrenees, then the best bachelor-party city in Europe.",
+  lo: 1900, hi: 3200, allIn: "$1,900–3,200", pre: "$1,350–2,200", fly: "BCN", effort: ["black", "black"], effortText: "Overnight flight + 3 hr bus",
+  card: ["Barça home match the day you land", "Duty-free Andorra: cheap drinks and gear", "59°F Barcelona, tapas outside"],
+  verdict: "The new Europe option. Grandvalira is the biggest ski area in the Pyrenees, Andorra is duty-free so drinks and gear rental are cheap, and Barcelona is around 59°F in February with tapas, football and nightlife that runs until 6 am. You land Sunday morning in time for Barça vs Levante. The tradeoffs: a 3-hour bus each way, and the Pyrenees get less snow than the Alps.",
+  pros: ["Barça host Levante on Sun Feb 21, the day you land", "Grandvalira: 210 km of pistes, 3-day pass about €209", "Andorra is duty-free: cheap drinks and gear rental", "Barcelona is about 59°F in February: tapas outside, beach walks"],
+  cons: ["3-hour bus each way between Barcelona and the slopes", "Snow is less reliable than the Alps (heavy snowmaking helps)", "Barcelona's tourist tax is €8–12 per person per night", "French school holidays fill Andorra too"],
+  facts: [["Ski days", "Tue–Thu"], ["Lift pass", "Grandvalira, 3 days €209 ≈ $236"], ["City", "Barcelona, 3 nights"], ["Feb weather", "Soldeu ~36°/19°F · Barcelona 59°/45°F"]],
+  week: [["Sat 20", "Overnight flight", "travel"], ["Sun 21", "Land, Barça match", "city"], ["Mon 22", "Bus to Andorra, spa", "travel"], ["Tue 23", "Ski 1", "ski"], ["Wed 24", "Ski 2", "ski"], ["Thu 25", "Ski 3", "ski"], ["Fri 26", "Bus back, tapas", "city"], ["Sat 27", "Barcelona, big night", "city"], ["Sun 28", "Fly home", "travel"]],
+  costs: [["Grandvalira 3-day pass (€208.50)", "$236–250"], ["Andorra lodging, 4 nights", "$180–380"], ["Barcelona lodging, 3 nights, with tourist tax", "$140–320"], ["Airport transfers + Barcelona ↔ Andorra bus", "$95–150"], ["Ski/board rental, 3 days", "$90–140"], ["Food and drinks, 8 days", "$385–565"], ["Activities and nightlife, incl. Barça tickets", "$200–400"], ["Subtotal before flights", "$1,350–2,200", "sub"], ["Round-trip flight to BCN (est.)", "$550–1,000"], ["All-in", "$1,900–3,200", "total"]],
+  costNote: "Only 7 nights of lodging, since Saturday night is on the plane. Converted at €1 ≈ $1.13. Barcelona's tourist tax went up in April 2026: a €5 city surcharge on top of the Catalan tax.",
+  stays: [
+    ["Andorra", "Mon Feb 22 – Fri Feb 26", [
+      ["Apartment in El Tarter or Soldeu", true, "2–3 bedrooms sleeping 6, a walk or shuttle to the lifts. El Tarter puts you next to the Abarset après club; Soldeu has the most bars.", "expect €220–380/night ≈ $180–300 pp"],
+      ["Hotel Naudi, Soldeu", false, "Simple 3-star in the village center near the gondola. Book 3 twin rooms with breakfast.", "est. €100–170/room ≈ $225–385 pp"],
+      ["Hotel Bruxelles, Soldeu", false, "Budget, British-run, with a busy bar. A classic group base.", "est. €90–150/room"],
+      ["Encamp (budget)", false, "The town below the slopes. Cheaper apartments, and the Funicamp gondola climbs straight into Grandvalira.", "expect €150–250/night for 6"]]],
+    ["Barcelona", "Sun Feb 21, then Fri Feb 26 – Sat Feb 27", [
+      ["Private room at a design hostel", true, "A private en-suite room for 4–6 at Generator Barcelona in Gràcia or one of the Sant Jordi hostels. Bars and terraces on site, central and cheap.", "est. €150–260/night + tax ≈ $130–200 pp"],
+      ["Hotel Barcelona Universal", false, "On Paral·lel with a rooftop pool, steps from the Carrer de Blai pintxos bars. Book 3 twin rooms.", "est. €120–190/room + tax ≈ $230–340 pp"],
+      ["Eixample 3-star", false, "Any 3-star in Eixample keeps you central and walkable. Book 3 twin rooms.", "est. €110–170/room + tax"]]]
+  ],
+  stayNote: "Skip Barcelona apartments. The city is phasing out tourist-apartment licenses by 2028, and hotels and hostels are the safer bet.",
+  getting: ["Fly into Barcelona (BCN). Overnight flights land Sunday morning; there are nonstops from several East Coast cities.", "BCN → city: the Aerobús to Plaça de Catalunya, about 35 minutes and €7.", "Barcelona ↔ Andorra: Andbus from Diagonal or the airport (€33 one way, €56 return, about 2h45) or Andorra Direct Bus (€35, about 3 hours), then a local bus up to Soldeu or El Tarter. Some services run straight to Soldeu for about €50.", "In Andorra, ski buses link the villages, and the Grandvalira lifts connect Soldeu, El Tarter, Grau Roig and Pas de la Casa.", "Customs: Andorra isn't in the EU, so expect a check on the way back into Spain. Duty-free limits apply (about 1 L of spirits each). Bring passports."],
+  skiDays: [
+    ["Tue Feb 23", "Soldeu + El Tarter", "Gondola up from Soldeu village. Warm up on the wide reds above El Tarter, then try the Avet World Cup slope.", "A mountain restaurant on the Espiolets plateau", "Abarset in El Tarter, the big après club, from about 4 pm"],
+    ["Wed Feb 24", "Grau Roig + Pas de la Casa", "Ski across the whole area to the French side. The Grau Roig bowl usually holds the best snow.", "Grau Roig base", "Pas de la Casa's bars, then back to Soldeu"],
+    ["Thu Feb 25", "Your favorite sector", "Spend the last day on whatever the group liked best. Finish with a final run down to the village.", "Back on the Espiolets plateau", "Last night in Soldeu: Fat Albert, then the Aspen bar"]
+  ],
+  cityIntro: "Three nights: the Sunday you land, then the closing Friday and Saturday. February is about 59°F and often sunny, so you can eat outside. Stay in Poble-sec, Gràcia or Eixample rather than on Las Ramblas. Dinner starts at 9–10 pm and clubs fill after 1 am.",
+  acts: [
+    ["FC Barcelona vs Levante", "Must-do", "Sun Feb 21 · time TBC", "~€60–200", "Barça's home match the day you land, at Spotify Camp Nou.", "Buy only on fcbarcelona.com. Kickoff times are set a few weeks out, so keep Sunday evening free."],
+    ["Carrer de Blai pintxos crawl", "Cheap eats", "Fri Feb 26 · evening", "€1.50–3 a pintxo", "A whole street of Basque-style bars in Poble-sec. Grab skewered bites off the counter and pay by the toothpick.", "Start around 8 pm and hit 4–5 bars."],
+    ["Bunkers del Carmel at sunset", "Free", "Fri Feb 26 · sunset", "Free", "Old anti-aircraft bunkers on a hilltop with a 360° view over the city to the sea. Bring beers.", "Taxi up; it's a steep walk."],
+    ["Sagrada Família", "Classic", "Sat Feb 27 · morning", "~€26–40", "Gaudí's basilica. The inside, with its forest of columns and stained glass, is the part to see.", "Book a timed slot online; walk-ups usually sell out."],
+    ["Can Paixano", "Bachelor classic", "Sat Feb 27 · lunch", "Cava ~€8–10 a bottle", "Also called La Xampanyeria: cheap pink cava and sausage sandwiches, standing room only.", "Closed Sundays. Go at opening to get counter space."],
+    ["El Born + Gothic Quarter bars", "Drinks", "Sat Feb 27 · evening", "Cocktails €13–18", "Old-town lanes full of bars. Paradiso (a speakeasy behind a fridge door) and Sips are two of the world's best-known cocktail bars.", "Both have long lines; arrive at opening."],
+    ["Big night out", "Big night", "Sat Feb 27 · 1 am+", "Cover €15–25", "Late dinner at 10 pm, then Razzmatazz (five rooms in an old warehouse) or the beach clubs at Port Olímpic, like Opium.", "Clubs don't fill until 1:30 am. Pace yourselves."],
+    ["Barceloneta seafood lunch", "Chill", "Fri Feb 26 · afternoon", "€25–40 pp", "Walk the seafront, then paella or grilled fish at a beachfront spot.", "Arrive from the Andorra bus, drop bags, head straight down."],
+    ["Caldea spa, Andorra", "Recovery", "Mon Feb 22 · afternoon", "€37 for 3 hours", "Southern Europe's biggest thermal spa, in Escaldes. Lagoons, hot pools and jacuzzis right after the bus ride up.", "Book a time slot online during ski season."],
+    ["Spotify Camp Nou tour", "Sports", "Any day", "~€30", "The stadium tour and museum, if you can't get match tickets.", "Book online; tours skip match days."]
+  ],
+  eat: [
+    ["Cheap eats", [["Carrer de Blai", "$", "Pintxos street in Poble-sec"], ["Can Paixano", "$", "Cava and sandwiches"], ["El Xampanyet", "$", "Cava and anchovies in El Born"], ["La Boqueria", "$", "Market stalls off Las Ramblas"]]],
+    ["Après", [["Abarset", "$$", "El Tarter's après club"], ["Fat Albert", "$$", "Soldeu bar and club"], ["Aspen bar", "$$", "Soldeu"]]],
+    ["Late", [["Razzmatazz", "", "Barcelona, five rooms"], ["Opium", "", "Port Olímpic beach club"], ["Sala Apolo", "", "Poble-sec, old dance hall"], ["Pas de la Casa", "", "Andorra's party village"]]],
+    ["Bachelor dinner", [["Bar Cañete", "$$$", "Upscale tapas bar off Las Ramblas"], ["Cervecería Catalana", "$$", "Classic tapas; no reservations, go early"], ["La Paradeta", "$$", "Pick your seafood by weight"]]]
+  ],
+  itin: [
+    ["Sat Feb 20", "travel", "Overnight flight to Barcelona.", "Plane"],
+    ["Sun Feb 21", "city", "Land around 8 am, Aerobús into town, drop bags. Long lunch, nap, then Barça vs Levante. Late tapas.", "Barcelona"],
+    ["Mon Feb 22", "travel", "Morning bus to Andorra, about 3 hours. Check in, pick up rentals, Caldea spa in the afternoon or duty-free shopping in Andorra la Vella.", "Andorra"],
+    ["Tue Feb 23", "ski", "Ski day 1: Soldeu and El Tarter. Après at Abarset.", "Andorra"],
+    ["Wed Feb 24", "ski", "Ski day 2: across to Grau Roig and Pas de la Casa.", "Andorra"],
+    ["Thu Feb 25", "ski", "Ski day 3. Last night in Soldeu: Fat Albert, Aspen.", "Andorra"],
+    ["Fri Feb 26", "city", "Morning bus to Barcelona. Barceloneta seafood lunch, Bunkers at sunset, Carrer de Blai pintxos crawl.", "Barcelona"],
+    ["Sat Feb 27", "city", "Sagrada Família, cava at Can Paixano, El Born bars, bachelor dinner at 10 pm, then Razzmatazz or Opium.", "Barcelona"],
+    ["Sun Feb 28", "travel", "Fly home from BCN.", "Home"]
+  ],
+  watch: ["Snow: the Pyrenees are less reliable than the Alps. Grandvalira has a lot of snowmaking, but check the snow report in early February.", "French school holidays (Zones A and B) overlap, and Pas de la Casa gets the busiest. You ski on weekdays, which helps.", "Pickpockets work Las Ramblas and the metro. Keep phones in front pockets.", "Barça's kickoff time is only set a few weeks out."],
+  compare: { lifts: "$236", skiing: "210 km, biggest in the Pyrenees", cityC: "Barcelona: Barça Sun Feb 21", risk: "Less reliable snow" }
+}
+};
+const ORDER = ["whistler", "banff", "alps", "barcelona"];
+
+/* ---------- research data (Nov 1, 2026) ---------- */
+const LODGING = {}, SEARCH = {}, TRANSPORT = {}, COSTS = {}, COST_NOTES = {}, STAY_NOTES = {}, ITIN = {}, WATCH = {}, UPDATES = {};
+LODGING.whistler = [
+  { area: "Whistler", name: "Tantalus Resort Lodge", type: "Condo-hotel suites with kitchens", loc: "south edge of Whistler Village, walk to the gondolas", url: "https://www.tantaluslodge.com/", book: "https://reservations.tantaluslodge.com/book/", img: "tantalus.jpg", fits: "2 two-bedroom suites, 3 per suite. Each has a queen, two twins and a sofa bed, so everyone gets a bed. One suite is rated for 4 adults, so 6 won't fit in one.", rate: "≈ CAD 350–550 per suite/night (estimate) · ≈ $385–615 pp for 4 nights", parking: "CAD 25/night + tax", note: "Full kitchens, 2 bathrooms per suite, hot tubs, pool and sauna.", pick: true },
+  { area: "Whistler", name: "Aava Whistler Hotel", type: "Hotel", loc: "2 min walk to the village, 5 min to the gondolas", url: "https://www.paradoxhotels.com/aava-whistler/", book: "https://reservations.travelclick.com/98371", img: "aava.jpg", fits: "3 rooms with two queens, 2 per room", rate: "≈ CAD 280–450/room/night (estimate) · ≈ $460–755 pp", parking: "CAD 26/night + tax", note: "Pool and hot tub, no kitchens. The hotel is advertising 40% off stays of 3+ nights; check whether it covers February." },
+  { area: "Whistler", name: "Pangea Pod Hotel", type: "Pod hotel", loc: "center of Whistler Village", url: "https://www.pangeapod.com/", book: "https://www.hostelworld.com/hostels/p/291442/pangea-pod-hotel-whistler-village/", img: "", fits: "6 private sleeping pods with shared washrooms", rate: "≈ CAD 90–160 per pod/night (estimate) · ≈ $295–535 pp", parking: "None on site; village day lots", note: "Social rooftop bar. Its website was down on Nov 1; confirm it's open before booking." },
+  { area: "Vancouver", name: "Sandman Signature Vancouver Downtown", type: "Hotel (formerly Sandman City Centre)", loc: "180 W Georgia St, 1 block from Rogers Arena", url: "https://www.sandmanhotels.com/signature-vancouver-downtown", book: "https://www.sandmanhotels.com/signature-vancouver-downtown", img: "sandman-vancouver.jpg", fits: "3 rooms with two queens, 2 per room", rate: "From CAD 180/room/night on the hotel site · ≈ $280–400 pp for 4 nights", parking: "On site, fee not posted (≈ CAD 25–45/night)", note: "Indoor pool. The closest base for the Canucks games.", pick: true },
+  { area: "Vancouver", name: "Hotel Belmont Vancouver MGallery", type: "Boutique hotel", loc: "Granville Street nightlife strip", url: "https://www.hotelbelmont.ca/", book: "https://www.hotelbelmont.ca/rooms-and-rates/", img: "belmont.jpg", fits: "3 rooms with two queens (or cheaper rooms with two doubles)", rate: "≈ CAD 170–260/room/night (estimate) · ≈ $280–435 pp", parking: "Paid, fee not posted", note: "Rooftop bar. Small rooms and weekend street noise." },
+  { area: "Vancouver", name: "Days Inn by Wyndham Vancouver Downtown", type: "Budget hotel", loc: "921 W Pender St, near Waterfront Station and the Whistler bus", url: "https://www.daysinnvancouver.com/", book: "https://www.daysinnvancouver.com/", img: "daysinn-vancouver.jpg", fits: "3 rooms with two double beds", rate: "≈ CAD 140–210/room/night (estimate) · ≈ $230–350 pp", parking: "Off site, ≈ CAD 25/night", note: "Cheapest central option; older building." }
+];
+SEARCH.whistler = [["Airbnb in Whistler for 6, Feb 21–25", "https://www.airbnb.com/s/Whistler--BC/homes?checkin=2027-02-21&checkout=2027-02-25&adults=6"], ["Epic Rides bus", "https://www.epicrides.ca/"], ["TransLink fares", "https://www.translink.ca/transit-fares/pricing-and-fare-zones"]];
+TRANSPORT.whistler = {
+  car: { short: "Not needed", answer: "No car needed", why: "The Whistler bus is about CAD 44 return, Whistler Village is car-free, and downtown Vancouver is walkable with SkyTrain. A car adds winter-tire rules, parking at both hotels and roughly doubles the cost of getting around.",
+    rows: [["Where", "YVR airport counters"], ["Vehicle", "7-seat minivan; 6 big suitcases need a roof box or 2 cars"], ["Base rate", "≈ CAD 80–110/day"], ["Taxes and airport fees", "+25–35%"], ["Winter tires (required on Hwy 99 to Mar 31)", "CAD 0–15/day"], ["Parking, Vancouver, 4 nights", "CAD 100–180"], ["Parking, Whistler, 4 nights", "≈ CAD 105–117"], ["Gas, about 300 km", "CAD 55–90"], ["Group total, 8 days", "CAD 1,060–1,690"]],
+    pp: "≈ $125–220", tip: "If anyone still wants a car, get a real YVR quote that includes winter tires." },
+  noCarHow: ["Canada Line SkyTrain from the airport to downtown.", "Epic Rides bus to Whistler and back; skis and bags ride free.", "Walk everywhere in Whistler Village. The Route 5 village shuttle is free.", "Walk or take SkyTrain in Vancouver. Rogers Arena is a block from the Sandman."],
+  legs: [
+    ["YVR → downtown", "Canada Line SkyTrain", "CAD 10", "25 min"],
+    ["Downtown → Whistler", "Epic Rides from 1088 Melville St; skis and bags free", "CAD 33.50 one way · 44 return", "1h45"],
+    ["(alternative)", "YVR Skylynx from downtown, or direct from the airport", "CAD 32 downtown · 65 from YVR", "≈ 2h"],
+    ["Around Whistler", "Walk, or the Route 5 village shuttle", "Free (other routes CAD 2.75)", "5–15 min"],
+    ["Whistler → downtown", "Epic Rides return", "In the return fare", "1h45"],
+    ["Vancouver transit", "SkyTrain and buses; tap a credit card", "CAD 3.50 a ride · day pass 12.55", "—"],
+    ["Downtown → Rogers Arena", "Walk from the Sandman, or Uber", "Free · Uber ≈ CAD 10–15", "5–20 min"],
+    ["Downtown → Richmond", "Canada Line", "CAD 3.50–5.10", "25 min"],
+    ["Downtown → YVR", "Canada Line (no airport fee going out), or UberXL", "CAD 3.50 · UberXL ≈ CAD 45–65 total", "25 min"]
+  ],
+  noCar: "≈ $55–100", withCar: "≈ $125–220", rec: "noCar",
+  note: "Skylynx hasn't posted its winter 2026–27 fares yet (the figures above are fall 2026). Epic Rides says its fares are fixed year-round."
+};
+COSTS.whistler = [["Epic Day Pass, 3 days, all resorts", "$386–452"], ["Whistler lodging, 4 nights", "$300–615"], ["Vancouver hotel, 4 nights", "$280–400"], ["Getting around (SkyTrain, Whistler bus, rideshares)", "$55–100"], ["Ski/board rental, 3 days", "$130–180"], ["Food and drinks, 8 days", "$480–680"], ["Activities and nightlife", "$150–350"], ["Subtotal before flights", "$1,800–2,800", "sub"], ["Round-trip flight to YVR (est.)", "$300–550"], ["All-in", "$2,100–3,350", "total"]];
+COST_NOTES.whistler = "Converted at 1 CAD ≈ $0.71, with BC lodging taxes (about 16–18%) included. The lift line runs from the non-holiday Epic Day Pass price (about $386) to the holiday-inclusive one (about $440–452). Prices rise until the pass goes off sale in early December.";
+UPDATES.whistler = { allIn: "$2,100–3,350", pre: "$1,800–2,800", lo: 2100, hi: 3350, lifts: "$386–452", facts: [[1, ["Lift pass", "Epic Day Pass, 3 days ≈ $386–452"]]],
+  acts: [[0, ["Canucks at Rogers Arena", "Must-do", "Sat Feb 27 · 7 pm", "CAD 90–250", "Canucks vs Calgary, a block from the Sandman. There are also home games on Sat Feb 20 vs Colorado (arrival night) and Sun Feb 21 vs Boston (5 pm, the day you head up).", "Confirmed on the NHL's 2026–27 schedule. Buy on Ticketmaster in January; the upper bowl is fine."]]] };
+
+/* ---------- Banff + Calgary ---------- */
+LODGING.banff = [
+  { area: "Banff", name: "Douglas Fir Resort & Chalets", type: "3-bedroom A-frame chalet with kitchen", loc: "Tunnel Mountain, above downtown Banff", url: "https://douglasfir.com/", book: "https://douglasfir.com/accommodation/3-bedroom-a-frame-chalet/", img: "douglasfir.jpg", fits: "1 chalet, maximum 6: a queen, 4 singles and a double sofa bed across 3 bedrooms. One bathroom.", rate: "From CAD 259/night on the resort site (February may be higher) · ≈ $135–240 pp for 4 nights", parking: "Free", note: "Chalets are booked by phone only: 1-800-661-9267. Free Roam bus pass included; guest waterpark.", pick: true },
+  { area: "Banff", name: "Hidden Ridge Resort", type: "Condo, 2 bedrooms + loft", loc: "Tunnel Mountain, about 2.3 km from downtown", url: "https://banffhiddenridge.com/", book: "https://reservations.travelclick.com/99396", img: "hiddenridge.jpg", fits: "1 condo: 2 bedrooms with a queen each, 2 queens in the loft and a sofa bed. 2 bathrooms.", rate: "≈ CAD 400–650/night (estimate) · ≈ $205–345 pp", parking: "Outdoor or heated underground; fee not stated", note: "Full kitchen, wood fireplace, outdoor hot tubs. The upgrade pick." },
+  { area: "Banff", name: "Banff Aspen Lodge", type: "Hotel", loc: "401 Banff Ave, walk to downtown", url: "https://www.banffaspenlodge.com/", book: "https://direct-book.com/properties/banffaspenlodge", img: "banffaspen.jpg", fits: "2 Premium rooms, 3 per room (ask for two queens)", rate: "≈ CAD 220–350/room/night (estimate) · ≈ $225–370 pp", parking: "Underground; fee not stated", note: "Breakfast included. Airport shuttles stop at the door." },
+  { area: "Calgary", name: "Sandman Signature Calgary Downtown", type: "Hotel (formerly Sandman City Centre)", loc: "888 7 Ave SW, on the free downtown CTrain stretch", url: "https://www.sandmanhotels.com/signature-calgary-downtown", book: "https://www.sandmanhotels.com/signature-calgary-downtown/rooms/standard-room-2-queen-beds", img: "sandman-calgary.jpg", fits: "2 rooms with two queens, 3 per room", rate: "From CAD 144/room/night on the hotel site · ≈ $150–210 pp for 4 nights", parking: "≈ CAD 20/day", note: "Pool. Up to 35% off Fri–Sun nights with the hotel's free rewards program.", pick: true },
+  { area: "Calgary", name: "Hotel Arts", type: "Boutique hotel", loc: "Beltline, near the 17th Ave bars; 1.5 km walk to the Saddledome", url: "https://www.hotelarts.ca/", book: "https://www.hotelarts.ca/", img: "", fits: "2 rooms with two queens and a balcony", rate: "≈ CAD 180–260/room/night (estimate) · ≈ $185–275 pp", parking: "≈ CAD 24/day self-park", note: "" },
+  { area: "Calgary", name: "Best Western Plus Suites Downtown", type: "All-suite hotel", loc: "1330 8 St SW, Beltline", url: "https://www.bestwestern.com/en_US/book/hotels-in-calgary/best-western-plus-suites-downtown/propertyCode.61037.html", book: "https://www.bestwestern.com/en_US/book/hotel-rooms.61037.html", img: "", fits: "2 rooms with two queens and a kitchenette", rate: "From ≈ CAD 169/room/night · ≈ $175–235 pp", parking: "CAD 20/night, heated underground", note: "Free hot breakfast." }
+];
+SEARCH.banff = [["SkiBig3 3-day price calendar", "https://www.skibig3.com/lift-tickets/"], ["Parks Canada fees", "https://parks.canada.ca/pn-np/ab/banff/visit/tarifs-fees"], ["Brewster Express fares", "https://www.banffjaspercollection.com/brewster-express/fares/"], ["Roam Transit fares", "https://roamtransit.com/fares/"]];
+TRANSPORT.banff = {
+  car: { short: "Optional: minivan recommended", answer: "Rent a minivan, Sat–Thu", why: "You can do Banff without a car: shuttle buses from the airport and free SkiBig3 ski shuttles. But a 7-seat minivan from Saturday to Thursday costs about the same per person, lets the group share one park pass, and makes the Flames game on Sunday possible before driving up. Return it at the airport and go car-free in Calgary.",
+    rows: [["Where", "YYC airport; Sat Feb 20 to Thu Feb 25 (add Fri for the spa)"], ["Vehicle", "7-seat minivan with soft bags; 8-seat SUV for hard cases or ski bags"], ["Base rate", "≈ CAD 70–150/day (minivan) · 150–260 (SUV)"], ["Taxes and airport fees", "≈ +25%"], ["Winter tires (not required in Alberta)", "CAD 0–25/day; ask for them"], ["Gas, about 520 km", "CAD 70–110"], ["Parks Canada group pass, 4 days", "CAD 98 (24.50/day per vehicle)"], ["Parking in Banff", "Free at Douglas Fir"], ["Group total, 5 days", "≈ CAD 626–1,380"]],
+    pp: "≈ $74–163 (minivan)", tip: "If the minivan quote is over about CAD 140/day, or nobody wants to drive in snow, book the Brewster Express round trip instead (about CAD 140 pp with tax)." },
+  noCarHow: ["Brewster Express or Banff Airporter from the airport to your Banff hotel.", "Free SkiBig3 ski shuttle from Banff hotels to Sunshine, Lake Louise and Norquay.", "Roam Transit buses around Banff (free with a Douglas Fir stay).", "CTrain and Uber in Calgary. The CTrain is free along 7 Ave downtown."],
+  legs: [
+    ["YYC → downtown Calgary", "Route 300 bus, or Uber XL", "CAD 4 · Uber ≈ CAD 15–23 pp", "25–45 min"],
+    ["YYC → Banff (no car)", "Brewster Express (8 a day) or Banff Airporter (14 a day)", "From CAD 66.75 one way (Brewster, booked as a return) · 88.90 (Airporter)", "2–2h45"],
+    ["Calgary → Banff (car)", "Trans-Canada Hwy 1", "≈ CAD 15–20 gas each way", "1h30"],
+    ["Banff → ski areas", "SkiBig3 ski shuttle", "Free with the lift ticket", "Norquay 10–15 min · Sunshine 20–30 · Lake Louise 45–60"],
+    ["Around Banff", "Roam Transit local routes", "CAD 2 a ride · 5 a day", "10–15 min"],
+    ["Banff → Canmore", "Roam Route 3", "CAD 6", "25 min"],
+    ["Banff → Lake Louise", "Roam Route 8X (reserve)", "CAD 12.50 + 3 booking fee", "1h"],
+    ["Around Calgary", "CTrain and buses", "CAD 4 a ride · 12.65 a day · free along 7 Ave", "—"],
+    ["Beltline → Saddledome", "Walk, CTrain or Uber", "Free · Uber ≈ CAD 8–15", "5–20 min"],
+    ["Park entry", "Parks Canada pass", "CAD 24.50/day per vehicle (up to 7) · 12.25/day per adult without a car", "—"]
+  ],
+  noCar: "≈ $170–290", withCar: "≈ $105–260", rec: "withCar",
+  note: "Car prices are estimates from rental sites, not February 2027 quotes. Get a real quote at YYC before deciding."
+};
+COSTS.banff = [["SkiBig3 3-day ticket (online)", "$300–370"], ["Banff lodging, 4 nights", "$135–345"], ["Calgary hotel, 4 nights", "$150–275"], ["Getting around (shared minivan, park pass, transit)", "$105–260"], ["Ski/board rental, 3 days", "$105–150"], ["Food and drinks, 8 days", "$425–625"], ["Activities and nightlife", "$150–350"], ["Subtotal before flights", "$1,350–2,400", "sub"], ["Round-trip flight to YYC (est.)", "$300–550"], ["All-in", "$1,650–2,950", "total"]];
+COST_NOTES.banff = "Converted at 1 CAD ≈ $0.71, with Alberta lodging taxes included. Getting around assumes a shared minivan Saturday to Thursday; without a car it's about $170–290. SkiBig3 prices change by date, so check the calendar for a Monday Feb 22 start.";
+STAY_NOTES.banff = "Douglas Fir's chalets book by phone only (1-800-661-9267). The free SkiBig3 shuttle doesn't publish its stops, so call 1-844-754-2443 to confirm it picks up at your hotel; with the minivan it doesn't matter.";
+ITIN.banff = [
+  ["Sat Feb 20", "city", "Fly into YYC, pick up the minivan, check in to the Sandman. Tacos at Native Tongues, then Cowboys Dance Hall.", "Calgary"],
+  ["Sun Feb 21", "travel", "Optional: Flames vs Ottawa at 5 pm, then drive up (1.5 hours). Otherwise drive up early, buy the park pass at the gate, soak at the Upper Hot Springs and eat at the Grizzly House.", "Banff"],
+  ["Mon Feb 22", "ski", "Ski day 1: Banff Sunshine. Après at Mad Trapper's, night at Wild Bill's.", "Banff"],
+  ["Tue Feb 23", "ski", "Ski day 2: Lake Louise back bowls, then skate the frozen lake. Park Distillery dinner.", "Banff"],
+  ["Wed Feb 24", "ski", "Ski day 3: Norquay in the morning, then the Johnston Canyon ice walk or dog sledding. High Rollers.", "Banff"],
+  ["Thu Feb 25", "travel", "Breakfast in Canmore, drive back to Calgary. Inglewood breweries.", "Calgary"],
+  ["Fri Feb 26", "city", "Drive to Kananaskis Nordic Spa (1 hour), return the van at YYC on the way back. Dinner at Major Tom, then Cowboys.", "Calgary"],
+  ["Sat Feb 27", "city", "Studio Bell and Stephen Avenue, then 17th Avenue. The Flames play in Vancouver tonight; watch at Craft Beer Market.", "Calgary"],
+  ["Sun Feb 28", "travel", "Route 300 bus or Uber XL to YYC, fly home.", "Home"]
+];
+WATCH.banff = DEST.banff.watch.slice(0, 2).concat(["The Calgary Roughnecks play in Oshawa on Feb 27, not at home. One listing shows a home game on Sat Feb 20; confirm on calgaryroughnecks.com.", "Saturday Feb 27 hockey is in Vancouver, so the Calgary Saturday is a bar night, not a game night."]);
+UPDATES.banff = { allIn: "$1,650–2,950", pre: "$1,350–2,400", lo: 1650, hi: 2950, cityC: "Calgary: Flames Sun Feb 21, cowboy bars",
+  acts: [[0, ["Roughnecks lacrosse", "Check date", "Sat Feb 20 · if at home", "~CAD 30–80", "Pro box lacrosse at the Saddledome: loud, fast and cheap. One listing shows a home game vs Oshawa on Sat Feb 20, your arrival night. The Feb 27 game is in Oshawa.", "Confirm on calgaryroughnecks.com before planning around it."]],
+         [4, ["Flames vs Senators", "Option", "Sun Feb 21 · 5 pm", "~CAD 80–200", "The only Flames home game in your window, in the Saddledome's final season. With the minivan you can watch it and still drive to Banff that night.", "Confirmed on the Flames' 2026–27 schedule."]]] };
+
+/* ---------- Mayrhofen + Munich ---------- */
+LODGING.alps = [
+  { area: "Mayrhofen", name: "Hotel-Gasthof Perauer", type: "Family-run hotel, bed & breakfast", loc: "Ahornstrasse 854; 3 min walk to the Penkenbahn, next to the Ahornbahn", url: "https://www.mayrhofen.at/en/service-providers/hotel-gasthof-perauer-54106", book: "https://www.booking.com/hotel/at/gasthof-perauer.html", img: "perauer.jpg", credit: "Mayrhofen tourism board", fits: "3 double rooms set up as twins, or a junior suite for 5 plus a double", rate: "From €95/night listed · ≈ €75–110 pp/night B&B this week (estimate) · ≈ $340–500 pp for 4 nights", parking: "On site", note: "Rated 4.8/5 from 301 reviews. Its own website is down, so the link goes to the tourism board; call +43 5285 62566.", pick: true },
+  { area: "Mayrhofen", name: "Apart Mountain Lodge Mayrhofen", type: "Apart-hotel with kitchens", loc: "5 min walk to the Penkenbahn, ski-bus stop at the door", url: "https://www.mountainlodge-mayrhofen.at/", book: "https://www.mayrhofen.at/en/service-providers/apart-mountain-lodge-mayrhofen-55786", img: "mountainlodge.jpg", credit: "Mayrhofen tourism board", fits: "One 3-bedroom apartment (77–82 m², 2 bathrooms); confirm 6 beds", rate: "From €252/night listed · ≈ €350–550/night (estimate) · ≈ $260–415 pp", parking: "On site", note: "May only sell Saturday-to-Saturday this week; ask about Sun–Thu first. Breakfast available at extra cost." },
+  { area: "Mayrhofen", name: "Hotel Strass", type: "Big après hotel, home of the Ice Bar", loc: "Next to the Penkenbahn", url: "https://www.hotelstrass.com", book: "https://booking.hotelstrass.com", img: "strass.jpg", fits: "2 deluxe triple rooms", rate: "From €105–155 pp/night listed · ≈ $475–790 pp", parking: "Free", note: "Ice Bar, sports bar and pizzeria on site. Loud, and the priciest." },
+  { area: "Munich", name: "MEININGER Hotel München City Center", type: "Hotel-hostel", loc: "Landsberger Str. 20b; one S-Bahn stop or 15 min walk to the main station", url: "https://www.meininger-hotels.com/en/hotels/munich/hotel-munich-city-center/", book: "https://www.meininger-hotels.com/en/hotels/munich/hotel-munich-city-center/", img: "meininger.jpg", fits: "One private 6-bed room, or 3 twin rooms", rate: "From €64 per 6-bed room (cheapest dates) · ≈ €120–240/night late Feb · ≈ $70–135 pp for 3 nights", parking: "Small paid garage", note: "Breakfast €12.50 booked online.", pick: true },
+  { area: "Munich", name: "a&o München Hackerbrücke", type: "Budget hostel-hotel", loc: "Arnulfstrasse 102, by Hackerbrücke S-Bahn", url: "https://www.aohostels.com/en/munich/muenchen-hackerbruecke/", book: "https://www.aohostels.com/en/munich/muenchen-hackerbruecke/", img: "ao-munich.jpg", fits: "A 6-bed room booked privately (confirm), or 3 twins", rate: "≈ €100–200/night for the room (estimate) · ≈ $60–110 pp", parking: "Not stated", note: "The cheapest option." },
+  { area: "Munich", name: "Wombat's City Hostel Munich", type: "Hostel with a bar", loc: "Senefelderstrasse 1, 3 min from the main station", url: "https://www.wombats-hostels.com/munich/hauptbahnhof/", book: "https://www.wombats-hostels.com/munich/hauptbahnhof/", img: "wombats.jpg", fits: "A 6-bed ensuite room booked out by the group (confirm)", rate: "≈ €28–45 pp/night (estimate) · ≈ $95–155 pp", parking: "None", note: "Best location and the liveliest bar." }
+];
+SEARCH.alps = [["Mayrhofen tourism board lodging search", "https://www.mayrhofen.at/en/accommodations"], ["ÖBB saver fares", "https://www.oebb.at/de/tickets-kundenkarten/oesterreich-europa/sparschiene.html"], ["Superskipass prices", "https://www.zillertal.at/en/winter/holidays/zillertal-superskipass.html"], ["MVV 2027 fares", "https://www.mvv-muenchen.de/mvv-im-ueberblick/die-gesellschaft/presse/pressemeldung/neue-fahrpreise-im-mvv-zum-01012027/"]];
+TRANSPORT.alps = {
+  car: { short: "Not needed", answer: "No car needed", why: "A car would only be used on two transfer days. The Mayrhofen hotels are 3–5 minutes from the lifts, ski buses are free with the lift pass, and in Munich a car would sit in a garage. Six people with bags need a 9-seat van, which costs about twice the train.",
+    rows: [["Where", "Munich Airport (MUC)"], ["Vehicle", "9-seat van (VW Caravelle, Ford Tourneo, Mercedes Vito)"], ["Base rate", "≈ €100–185/day"], ["Week, Feb 21–28", "≈ €700–1,300"], ["Cross-border fee to Austria", "≈ €25–30"], ["Austrian 10-day vignette (digital only from Feb 2027)", "≈ €13–14"], ["Fuel, about 460 km", "€60–90"], ["Parking, Munich, 3 nights", "€60–105"], ["Winter tires", "Usually included in German winter rentals; confirm"]],
+    pp: "≈ $180–320", tip: "" },
+  noCarHow: ["Train from the airport to Jenbach (via München Ost), then the Zillertalbahn to Mayrhofen. Or a shared airport shuttle to the hotel door if nobody wants to change trains after the overnight flight.", "Free ski buses across the Zillertal with the Superskipass.", "Train to Innsbruck and on to Munich on Thursday.", "U-Bahn and S-Bahn in Munich on day tickets."],
+  legs: [
+    ["MUC → Jenbach", "S-Bahn to München Ost, then Railjet/EC on one ticket", "≈ €25–50 saver", "2–2h30"],
+    ["Jenbach → Mayrhofen", "Zillertalbahn train", "Free with the digital guest card (likely) · otherwise ≈ €10", "55 min"],
+    ["(alternative) MUC → Mayrhofen", "Shared shuttle (Four Seasons Travel)", "≈ €40–80", "2–2h30"],
+    ["(alternative) private van", "Private transfer for 6–8", "≈ €500–700 per van (€85–115 pp)", "2h"],
+    ["Ski days", "Zillertal ski buses", "Free with the Superskipass", "—"],
+    ["Mayrhofen → Innsbruck", "Zillertalbahn + ÖBB regional train", "≈ €6–18", "1h20–1h30"],
+    ["Innsbruck → Munich", "Railjet/EC saver fare", "≈ €15–40", "1h45"],
+    ["Munich transit", "MVV zone M", "€4.20 a ride · €10.80 day ticket (2027) · group day ticket for 5 ≈ €20–21", "—"],
+    ["Munich → MUC", "S1/S8 on a group ticket for 5 + 1 single", "≈ €8 pp", "40 min"]
+  ],
+  noCar: "≈ $80–230", withCar: "≈ $180–320", rec: "noCar",
+  note: "Rail saver fares are estimates. Book on the DB Navigator or ÖBB app once the group decides; the cheap seats go first."
+};
+COSTS.alps = [["Zillertaler Superskipass, 3 days (€241)", "$272"], ["Mayrhofen lodging, 4 nights", "$260–500"], ["Munich lodging, 3 nights", "$60–155"], ["Getting around (trains, shuttles, Munich transit)", "$80–230"], ["Ski/board rental, 3 days (online)", "$120–170"], ["Food and drinks, 8 days", "$410–580"], ["Activities and nightlife", "$100–300"], ["Subtotal before flights", "$1,300–2,200", "sub"], ["Round-trip flight to MUC (est.)", "$600–1,100"], ["All-in", "$1,900–3,300", "total"]];
+COST_NOTES.alps = "Only 7 nights of lodging, since Saturday night is on the plane. Converted at €1 ≈ $1.13. The Superskipass price (€241 for 3 days) is confirmed on the Zillertal's site for 2026/27.";
+STAY_NOTES.alps = "This is a Dutch and French school-holiday week, and many Austrian apartments only rent Saturday to Saturday, so ask about a Sunday–Thursday stay first. Austria adds a small tourist tax per person per night.";
+WATCH.alps = DEST.alps.watch.concat(["Perauer's own website is down. Call +43 5285 62566 to confirm it's open before booking."]);
+UPDATES.alps = { allIn: "$1,900–3,300", pre: "$1,300–2,200", lo: 1900, hi: 3300 };
+
+/* ---------- Barcelona + Andorra ---------- */
+LODGING.barcelona = [
+  { area: "Andorra", name: "Hotel Nordic", type: "4-star ski-in/ski-out hotel, breakfast and dinner included", loc: "Foot of the El Tarter slopes; the Andbus coach stops at the door", url: "https://www.hotelnordic.com/inici", book: "https://www.hotelnordic.com/hotel", img: "nordic.jpg", fits: "3 twin rooms", rate: "≈ €150–260/room/night (estimate) · ≈ $340–600 pp for 4 nights", parking: "Free outdoor; paid garage", note: "Half board covers 4 dinners. Spa, pool and bowling.", pick: true },
+  { area: "Andorra", name: "Hotel Bruxelles", type: "3-star family hotel", loc: "Soldeu, about 50 m from the gondola", url: "https://hotel-bruxelles-soldeu.andorramania.com", book: "https://www.booking.com/hotel/ad/bruxelles.html", img: "bruxelles.jpg", credit: "Andorramania", fits: "3 twin or double rooms (ask for twins)", rate: "≈ €110–200/room/night (estimate) · ≈ $250–465 pp", parking: "On site (unverified)", note: "Cheapest walk-to-gondola option; guests rate it 8.2–8.5. No official website, so the link is a listing page." },
+  { area: "Barcelona", name: "Generator Barcelona", type: "Design hostel, private room", loc: "Gràcia, near metro Diagonal and Verdaguer", url: "https://staygenerator.com/hostels/barcelona", book: "https://staygenerator.com/hostels/barcelona", img: "", fits: "One private 6-bed room (3 bunks, AC, lockers)", rate: "From €86.40/room/night on the hostel site · ≈ $65–140 pp for 3 nights with tax", parking: "None", note: "Rooftop bar. Best value by far.", pick: true },
+  { area: "Barcelona", name: "Sant Jordi Hostel Sagrada Familia", type: "Hostel, private rooms", loc: "10 min walk to the Sagrada Família, metro L2/L5", url: "https://www.santjordihostels.com/hostel-sant-jordi-sagrada-familia/", book: "https://www.santjordihostels.com/hostel-sant-jordi-sagrada-familia/", img: "santjordi.jpg", fits: "2 private ensuite triple rooms", rate: "≈ €90–160/room/night (estimate) · ≈ $120–210 pp", parking: "None", note: "Kitchen, 24-hour reception, €10 key deposit." },
+  { area: "Barcelona", name: "Hotel Barcelona Universal", type: "4-star hotel with a rooftop pool", loc: "Av. del Paral·lel, metro Paral·lel; near Carrer de Blai", url: "https://www.hotelbarcelonauniversal.com/en", book: "https://www.hotelbarcelonauniversal.com/en", img: "universal.jpg", fits: "2 triple rooms, or 3 doubles/twins", rate: "≈ €150–260 per triple/night (estimate) · ≈ $190–330 pp", parking: "Public garages ≈ €25–40/day", note: "Rooftop pool and bar." }
+];
+SEARCH.barcelona = [["Booking.com Soldeu for 6", "https://www.booking.com/searchresults.html?ss=Soldeu&checkin=2027-02-22&checkout=2027-02-26&group_adults=6"], ["Airbnb Soldeu / El Tarter", "https://www.airbnb.com/s/Soldeu--Andorra/homes?checkin=2027-02-22&checkout=2027-02-26&adults=6"], ["Andbus", "https://www.andbus.ad/en"], ["Grandvalira passes", "https://www.grandvalira.com/en/ski-pass/day"]];
+TRANSPORT.barcelona = {
+  car: { short: "Not needed", answer: "No car needed", why: "The Andbus coach drops you at the hotel door in Soldeu and El Tarter, and the hotels are steps from the lifts. A car for 6 with bags needs a 9-seat van, and it costs more than the bus once you add the Andorra cross-border fee, tolls and snow chains.",
+    rows: [["Where", "Barcelona Airport (BCN), Mon–Fri only"], ["Vehicle", "9-seat van"], ["Base rate", "≈ €90–160/day"], ["5 days", "≈ €450–800"], ["Andorra cross-border fee", "€55.50 flat (Enterprise)"], ["Snow chains / winter kit", "€0–60 (required when signposted)"], ["Tolls incl. the Cadí tunnel", "≈ €50–70 round trip"], ["Fuel, about 500 km", "€55–80"], ["Parking", "Free at Hotel Nordic; avoid Barcelona garages (€25–40/day)"]],
+    pp: "≈ $115–210 (car only)", tip: "" },
+  noCarHow: ["Aerobús from the airport to Plaça de Catalunya.", "Andbus coach from Barcelona (Diagonal or the airport) to the Soldeu and El Tarter hotel stops.", "Walk to the lifts. Grandvalira's lifts link Soldeu, El Tarter, Grau Roig and Pas de la Casa.", "Metro on a T-casual 10-ride card, and taxis late at night."],
+  legs: [
+    ["BCN → city", "Aerobús to Plaça de Catalunya", "€7.45", "35 min"],
+    ["(alternative)", "Metro L9 Sud airport ticket", "€5.90", "50–60 min"],
+    ["(alternative)", "Taxi, 2 cars", "≈ €35–45 per car", "25–30 min"],
+    ["Barcelona → Soldeu / El Tarter", "Andbus from Diagonal or the airport to the hotel stop", "≈ €33–50 one way (price varies by date)", "3h45–4h"],
+    ["(alternative)", "Andorra Direct Bus to Andorra la Vella, then a local bus up", "€35 + ≈ €3", "3h + 40 min"],
+    ["In Andorra", "Walk to the gondola; lifts connect the whole area", "€0–10", "—"],
+    ["Andorra → Barcelona", "Andbus", "≈ €33–50", "≈ 4h"],
+    ["Barcelona transit", "T-casual, 10 rides", "€13 (single €2.90)", "—"],
+    ["City ↔ Spotify Camp Nou", "Metro L3, or taxi", "T-casual · taxi ≈ €15–25 per car", "15–25 min"],
+    ["City → BCN", "Aerobús or taxi", "€7.45 · ≈ €12–15 pp by taxi", "35 min"]
+  ],
+  noCar: "≈ $115–205", withCar: "≈ $160–290", rec: "noCar",
+  note: "Book the Monday-morning Andbus from Barcelona Diagonal so you reach Andorra by mid-afternoon. Andbus prices change by date; check andbus.ad with the real dates."
+};
+COSTS.barcelona = [["Grandvalira 3-day pass (from €208.50)", "$236–280"], ["Andorra lodging, 4 nights", "$250–600"], ["Barcelona lodging, 3 nights, with tourist tax", "$65–210"], ["Getting around (Aerobús, Andbus, metro, taxis)", "$115–205"], ["Ski/board rental, 3 days", "$90–140"], ["Food and drinks, 8 days", "$385–565"], ["Activities and nightlife, incl. Barça tickets", "$200–400"], ["Subtotal before flights", "$1,350–2,400", "sub"], ["Round-trip flight to BCN (est.)", "$550–1,000"], ["All-in", "$1,900–3,400", "total"]];
+COST_NOTES.barcelona = "Only 7 nights of lodging, since Saturday night is on the plane. Converted at €1 ≈ $1.13. Grandvalira prices change by date and €208.50 is the lowest published 3-day price, so the range allows for peak-week pricing. Barcelona's tourist tax is included.";
+STAY_NOTES.barcelona = "Hotel Nordic includes breakfast and dinner, which cuts food costs for the 4 Andorra nights. Barcelona is phasing out tourist apartments, so hostels and hotels are the safer bet.";
+WATCH.barcelona = DEST.barcelona.watch.concat(["LaLiga can move the Barça match to Sat Feb 20 or Mon Feb 22 a few weeks out. A Saturday game would be missed, since you land Sunday."]);
+UPDATES.barcelona = { allIn: "$1,900–3,400", pre: "$1,350–2,400", lo: 1900, hi: 3400, lifts: "$236–280", facts: [[1, ["Lift pass", "Grandvalira, 3 days from €209 ≈ $236–280"]]],
+  acts: [[0, ["FC Barcelona vs Levante", "Must-do", "Sun Feb 21 · kickoff TBA", "~€60–200", "On FC Barcelona's official schedule for Sun Feb 21 at Spotify Camp Nou, the day you land.", "LaLiga fixes the day and time 3–4 weeks out and can move it to Saturday or Monday. Buy on fcbarcelona.com once it's set."]]] };
+
+for (const [id, u] of Object.entries(UPDATES)) {
+  const d = DEST[id];
+  ["allIn", "pre", "lo", "hi"].forEach(k => { if (u[k] !== undefined) d[k] = u[k]; });
+  if (u.lifts) d.compare.lifts = u.lifts;
+  if (u.cityC) d.compare.cityC = u.cityC;
+  (u.acts || []).forEach(([i, a]) => { d.acts[i] = a; });
+  (u.facts || []).forEach(([i, f]) => { d.facts[i] = f; });
+}
+
+const DATE_CHECKS = [
+  ["ok", "US Presidents' Day is Mon Feb 15.", "Epic's holiday dates end Feb 14, so Whistler passes are at regular prices."],
+  ["ok", "Canada's Family Day (BC and Alberta) is also Feb 15.", "February is Banff's cheapest month for hotels outside that weekend."],
+  ["ok", "Spain has no school break this week.", "Barcelona is in its quiet season. Andorra still gets French families (below)."],
+  ["bonus", "Munich's Starkbierfest opens Fri Feb 26.", "The strong-beer festival at Nockherberg runs Feb 26 – Mar 21, 2027."],
+  ["bonus", "Home games on your nights out.", "Canucks Sat Feb 20, Sun Feb 21 and Sat Feb 27; Flames Sun Feb 21; Barça Sun Feb 21 (LaLiga can still move it). Confirm each closer to the date."],
+  ["warn", "Dutch spring break (north and middle regions): Feb 20–28.", "Exactly your dates. Many Dutch families ski in Austria, the Zillertal especially."],
+  ["warn", "French winter holidays: Zone A Feb 13 – Mar 1, Zone B Feb 20 – Mar 8.", "This mostly fills the French Alps, but Andorra gets busy too, Pas de la Casa most of all."]
+];
+const WEATHER = [
+  ["Whistler village", "37° / 25°F", "Deep, heavier coastal snow up top. A warm storm can mean rain at the base."],
+  ["Vancouver", "46° / 36°F", "Rain, not snow. Bring a jacket."],
+  ["Banff", "28° / 7°F", "Dry, light snow. Cold snaps to −13°F happen."],
+  ["Calgary", "30° / 10°F", "Chinook winds can push it to 50°F for a day."],
+  ["Mayrhofen", "39° / 21°F", "Peak month in the Alps; the Hintertux glacier is snow-sure."],
+  ["Munich", "41° / 27°F", "Gray and cold."],
+  ["Soldeu, Andorra", "~36° / 19°F", "Often sunny. Snow varies by season; lots of snowmaking."],
+  ["Barcelona", "59° / 45°F", "Mild and often sunny."]
+];
+const STEPS = [
+  ["By Fri Nov 6", "Vote on this site.", "Then collect a lodging deposit of about $250–350 per person."],
+  ["By Nov 15", "Book lodging on free-cancellation rates.", "If the Alps or Andorra win, book that week; school holidays fill them first."],
+  ["By Nov 30", "Buy lift passes.", "The Epic Day Pass (Whistler) gets more expensive in steps and goes off sale in early December. Zillertal and Grandvalira sell online. SkiBig3 (Banff) must be bought at least 21 days ahead."],
+  ["Nov – mid Dec", "Book flights.", "Set fare alerts for Sat Feb 20 out and Sun Feb 28 back. For Europe, also check overnight flights on Fri Feb 19."],
+  ["December", "Reserve the rental car (if the trip needs one) and gear.", "Big SUVs and minivans sell out in February. Online gear rental is often 20–30% cheaper than walking in."],
+  ["January", "Book the fun stuff.", "Game tickets, a Starkbierfest table, the bachelor dinner, spa and activity slots."],
+  ["Week of Feb 13", "Final checks.", "Snow and cold forecast, passports, EU travel authorization (ETIAS) status for Europe."]
+];
+const ASSUMPTIONS = [
+  "Every price is per person for 6 people, in USD at 1 CAD ≈ $0.71 and €1 ≈ $1.13 (late October 2026).",
+  "Lodging includes local taxes and typical cleaning fees. Rates are February estimates from current listings, last season's rates and monthly averages; live February 2027 rates aren't fully posted, so check each with exact dates before booking.",
+  "Getting-around costs include airport transfers, transit or shuttles, rideshares and, where it makes sense, a shared rental car with fuel and parking.",
+  "Flight ranges are generic US round trips until we know everyone's home airport.",
+  "Game and festival dates come from published 2026–27 schedules and can move."
+];
+
+const SOURCES = [
+  ["Zillertal Superskipass 2026/27 prices", "https://www.zillertal.at/en/winter/holidays/zillertal-superskipass.html"],
+  ["Epic Pass 3-day prices (Undercover Tourist)", "https://www.undercovertourist.com/ski-resorts/vail-colorado/epic-3-day-unrestricted-pass-ticket/"],
+  ["SkiBig3 lift tickets and free ski shuttle", "https://www.skibig3.com/lift-tickets/"],
+  ["Grandvalira day passes (dynamic pricing)", "https://www.grandvalira.com/en/ski-pass/day"],
+  ["Estiber: Grandvalira 2026–27 price table", "https://www.estiber.com/blog/?p=10154"],
+  ["NHL 2026–27 Canucks schedule", "https://api-web.nhle.com/v1/club-schedule-season/VAN/20262027"],
+  ["Flames 2026–27 schedule release", "https://www.nhl.com/flames/news/flames-release-2026-27-season-schedule"],
+  ["FC Barcelona first-team schedule", "https://www.fcbarcelona.com/en/football/first-team/schedule"],
+  ["Munich Starkbierfest 2027 dates", "https://www.munich.travel/en/pois/markets-festivals/strong-beer-festival-nockherberg"],
+  ["Epic Rides (Vancouver ↔ Whistler)", "https://www.epicrides.ca/"],
+  ["YVR Skylynx prices", "https://yvrskylynx.com/prices/"],
+  ["TransLink fares", "https://www.translink.ca/transit-fares/pricing-and-fare-zones"],
+  ["BC Transit Whistler fares", "https://www.bctransit.com/whistler/fares/"],
+  ["Parks Canada Banff fees", "https://parks.canada.ca/pn-np/ab/banff/visit/tarifs-fees"],
+  ["Brewster Express fares", "https://www.banffjaspercollection.com/brewster-express/fares/"],
+  ["Banff Airporter rates", "https://banffairporter.com/schedule-rates/"],
+  ["Roam Transit fares", "https://roamtransit.com/fares/"],
+  ["Calgary Transit 2026 fares", "https://www.calgarytransit.com/news/calgary-transit-fares-changing-for-2026.html"],
+  ["MVV 2027 fares", "https://www.mvv-muenchen.de/mvv-im-ueberblick/die-gesellschaft/presse/pressemeldung/neue-fahrpreise-im-mvv-zum-01012027/"],
+  ["ÖBB Sparschiene saver fares", "https://www.oebb.at/de/tickets-kundenkarten/oesterreich-europa/sparschiene.html"],
+  ["Zillertalbahn free with the guest card (Tiroler Tageszeitung)", "https://www.tt.com/artikel/30840997/gratis-anreise-ins-zillertal-mit-gaestekarte-am-handy"],
+  ["Andbus (Barcelona ↔ Andorra)", "https://www.andbus.ad/en"],
+  ["Andorra Direct Bus", "https://www.andorradirectbus.es/en/"],
+  ["Aerobús fares", "https://aerobusbarcelona.es/fares/?lang=en"],
+  ["Enterprise BCN (Andorra cross-border fee)", "https://www.enterprise.co.uk/en/car-hire-locations/es/barcelona-el-prat-airport-e5e1.html"],
+  ["Barcelona tourist tax 2026", "https://www.idealista.com/en/news/legal-advice-in-spain/2026/07/07/856013-spain-s-tourist-tax-barcelona-hike-new-city-levies-for-2026"],
+  ["Caldea 2026 prices", "https://andorrainsiders.com/en/caldea-andorra-precios-horarios-spa/"],
+  ["Therme Erding 2026 prices", "https://www.monsterdealz.de/magazin/therme-erding-preise"],
+  ["French school holidays 2026–27", "https://www.connexionfrance.com/news/france-school-holidays-202627-dates-confirmed/762352"],
+  ["Dutch school holidays 2026–27", "https://www.government.nl/topics/school-holidays/overview-of-school-holiday-dates-per-academic-year/school-holiday-dates-2026-2027"],
+  ["Kayak Calgary van rentals", "https://www.kayak.com/Calgary-Van-Rentals.27482.cva.ksp"],
+  ["Kayak Munich Airport van rentals", "https://www.kayak.com/Munich-Franz-Josef-Strauss-Airport-Van-Rentals.MUC.acva.ksp"],
+  ["DriveBC winter tire rules (Hwy 99)", "https://images.drivebc.ca/bchighwaycam/pub/html/www/178.html"],
+  ["ETIAS delayed to 2027", "https://www.travelpirates.com/captains-log/etias-delayed-2027-us-travelers"],
+  ["CAD/USD rate, Oct 2026", "https://www.exchange-rates.org/exchange-rate-history/cad-usd-2026-10-01"]
+];
+
+/* ---------- static renders ---------- */
+const LABEL = { whistler: ["Best all-round", ""], banff: ["Lowest cost", "neutral"], alps: ["Best value in Europe", "neutral"], barcelona: ["Warmest city", "neutral"] };
+const CARD_IMG = { whistler: "whistler-alt", banff: "lakelouise", alps: "penken", barcelona: "barcelona-view" };
+const ext = (u, t) => u ? `<a class="ext" href="${h(u)}" target="_blank" rel="noopener noreferrer">${h(t)}</a>` : "";
+function effortHTML(d) { return `<span class="syms">${d.effort.map(e => `<span class="sym ${e}"></span>`).join("")}</span>`; }
+function weekHTML(w) { return w.map(([d, t, k]) => `<div class="day ${k}"><b>${h(d)}</b><span>${h(t)}</span></div>`).join(""); }
+const costsFor = id => COSTS[id] || DEST[id].costs;
+
+function renderHome() {
+  $("#home-cards").innerHTML = ORDER.map(id => { const d = DEST[id], k = CARD_IMG[id], t = TRANSPORT[id]; return `
+    <article class="card">
+      <a class="ph" href="#${id}" tabindex="-1"><img src="${img(k)}" alt="${h(CREDITS[k][3])}" loading="lazy"></a>
+      <div class="body">
+        <div class="top"><span class="label ${LABEL[id][1]}">${h(LABEL[id][0])}</span><span class="price">${h(d.allIn)} <small>per person</small></span></div>
+        <div><h3>${h(d.name)}</h3><p class="small muted">${h(d.region)}</p></div>
+        <p class="small">${h(d.tagline)}</p>
+        <dl class="minifacts"><dt>Skiing</dt><dd>${h(d.compare.skiing)}</dd><dt>City</dt><dd>${h(d.facts[2][1])}</dd><dt>Fly into</dt><dd>${h(d.fly)}</dd><dt>Car</dt><dd>${h(t ? t.car.short : "")}</dd></dl>
+        <div class="actions"><a class="btn primary" href="#${id}">Read the plan</a><button class="btn" data-vote="${id}">Vote</button></div>
+      </div>
+    </article>`; }).join("");
+  $("#home-glance").innerHTML = `<table style="min-width:760px"><thead><tr><th>Trip</th><th>All-in</th><th>Before flights</th><th>Ski days</th><th>Car</th><th>City highlight</th><th>February risk</th></tr></thead><tbody>${ORDER.map(id => { const d = DEST[id], t = TRANSPORT[id]; return `<tr><td><a href="#${id}"><b>${h(d.name)}</b></a></td><td class="mono">${h(d.allIn)}</td><td class="mono">${h(d.pre)}</td><td>${h(d.facts[0][1])}</td><td>${h(t ? t.car.short : "")}</td><td>${h(d.compare.cityC)}</td><td>${h(d.compare.risk)}</td></tr>`; }).join("")}</tbody></table>`;
+  $("#home-week").innerHTML = weekHTML(WEEK_NA);
+  const fmt = v => "$" + v.toLocaleString("en-US");
+  $("#cost-range").textContent = `${fmt(Math.min(...ORDER.map(i => DEST[i].lo)))} – ${fmt(Math.max(...ORDER.map(i => DEST[i].hi)))} all-in`;
+  const t = new Date(), days = Math.ceil((new Date(2027, 1, 20) - new Date(t.getFullYear(), t.getMonth(), t.getDate())) / 86400000);
+  $("#countdown").textContent = days > 1 ? `${days} days` : days === 1 ? "Tomorrow" : days > -9 ? "Trip week" : "Done";
+}
+
+function stayCard(s) {
+  return `
+  <article class="stay ${s.pick ? "pick" : ""}">
+    <div class="ph">${s.img ? `<img src="img/stay/${h(s.img)}" alt="${h(s.name)}" loading="lazy"><span class="credit">Photo: ${h(s.credit || s.name)}</span>` : `<span class="noimg">No photo here yet. See the property's website.</span>`}${s.pick ? `<span class="label">Our pick</span>` : ""}</div>
+    <div class="body">
+      <div><h3>${h(s.name)}</h3><p class="kind">${h(s.type)}${s.loc ? ` · ${h(s.loc)}` : ""}</p></div>
+      <p class="rate">${h(s.rate)}</p>
+      <dl><dt>For 6</dt><dd>${h(s.fits)}</dd>${s.parking ? `<dt>Parking</dt><dd>${h(s.parking)}</dd>` : ""}${s.note ? `<dt>Note</dt><dd>${h(s.note)}</dd>` : ""}</dl>
+      <div class="links">${ext(s.url, "Official site")}${s.book && s.book !== s.url ? ext(s.book, "Check prices") : ""}</div>
+    </div>
+  </article>`;
+}
+
+function aroundHTML(id) {
+  const t = TRANSPORT[id];
+  if (!t) return `<ul class="list">${DEST[id].getting.map(g => `<li>${h(g)}</li>`).join("")}</ul>`;
+  const c = t.car;
+  return `
+    <div class="answer"><span class="yn">${h(c.answer)}</span><p>${h(c.why)}</p></div>
+    <div class="two">
+      <div class="box"><h3>If you rent a car</h3>
+        <div class="table-wrap"><table><tbody>
+          ${c.rows.map(([k, v]) => `<tr><td>${h(k)}</td><td class="num">${h(v)}</td></tr>`).join("")}
+          <tr class="total"><td>Per person, whole trip</td><td class="num">${h(c.pp)}</td></tr>
+        </tbody></table></div>
+        ${c.tip ? `<p class="small muted">${h(c.tip)}</p>` : ""}
+      </div>
+      <div class="box"><h3>Without a car</h3>
+        <ul class="list">${t.noCarHow.map(x => `<li>${h(x)}</li>`).join("")}</ul>
+      </div>
+    </div>
+    <h3>Every leg</h3>
+    <div class="table-wrap"><table style="min-width:640px"><thead><tr><th>Leg</th><th>How</th><th>Cost</th><th>Time</th></tr></thead><tbody>
+      ${t.legs.map(([leg, how, cost, time]) => `<tr><td><b>${h(leg)}</b></td><td>${h(how)}</td><td class="mono">${h(cost)}</td><td>${h(time)}</td></tr>`).join("")}
+    </tbody></table></div>
+    <div class="scen">
+      <div class="${t.rec === "noCar" ? "rec" : ""}"><span class="small muted">Getting around without a car, per person</span><b>${h(t.noCar)}</b>${t.rec === "noCar" ? `<span class="label" style="justify-self:start">Recommended</span>` : ""}</div>
+      <div class="${t.rec === "withCar" ? "rec" : ""}"><span class="small muted">With a rental car, per person</span><b>${h(t.withCar)}</b>${t.rec === "withCar" ? `<span class="label" style="justify-self:start">Recommended</span>` : ""}</div>
+    </div>
+    ${t.note ? `<p class="note">${h(t.note)}</p>` : ""}`;
+}
+
+let spyOff = null;
+function setupSpy(id, secs) {
+  if (spyOff) spyOff();
+  const items = secs.map(([k]) => [document.getElementById(`${id}-${k}`), document.querySelector(`[data-sec="${id}-${k}"]`)]).filter(([s, a]) => s && a);
+  let ticking = false, last = null;
+  const update = () => {
+    ticking = false;
+    let cur = items[0];
+    for (const it of items) if (it[0].getBoundingClientRect().top <= 150) cur = it;
+    if (cur === last) return; last = cur;
+    items.forEach(it => it[1].classList.toggle("on", it === cur));
+    const bar = cur[1].parentElement;
+    if (bar.scrollWidth > bar.clientWidth + 4) bar.scrollTo({ left: Math.max(0, cur[1].offsetLeft - 16), behavior: reduceMotion ? "auto" : "smooth" });
+  };
+  const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
+  window.addEventListener("scroll", onScroll, { passive: true });
+  requestAnimationFrame(update);
+  spyOff = () => window.removeEventListener("scroll", onScroll);
+}
+
+function renderDest(id) {
+  const d = DEST[id], stays = LODGING[id] || [], t = TRANSPORT[id];
+  const i = ORDER.indexOf(id), prevId = ORDER[(i + 3) % 4], nextId = ORDER[(i + 1) % 4];
+  const secs = [["overview", "Overview"], ["cost", "Cost"], ["stay", "Where to stay"], ["around", "Getting around"], ["ski", "Ski days"], ["city", `${d.cityName} days`], ["eat", "Eat & drink"], ["days", "Day by day"], ["know", "Good to know"]];
+  const areas = d.stays.map(([place, dates]) => [place, dates]);
+  $("#v-dest").innerHTML = `
+  <section class="dhead">
+    <p class="crumbs"><a href="#">Overview</a> / ${h(d.name)}</p>
+    <h1>${h(d.name)}</h1>
+    <p class="lede">${h(d.tagline)}</p>
+    <div class="stats"><span class="stat">All-in <b>${h(d.allIn)}</b></span><span class="stat">Before flights <b>${h(d.pre)}</b></span><span class="stat">Fly into <b>${h(d.fly)}</b></span><span class="stat">${effortHTML(d)} ${h(d.effortText)}</span>${t ? `<span class="stat">Car: ${h(t.car.short)}</span>` : ""}</div>
+    <div class="banner"><img src="${img(d.hero)}" alt="${h(CREDITS[d.hero][3])}"><span class="credit">${h(credit(d.hero))}</span></div>
+  </section>
+  <div class="layout">
+    <nav class="toc subnav" aria-label="On this page"><span class="tl">On this page</span>${secs.map(([k, l]) => `<button type="button" class="tocl" data-jump="${id}-${k}" data-sec="${id}-${k}">${h(l)}</button>`).join("")}<button type="button" class="btn" data-vote="${id}">Vote for this trip</button></nav>
+    <div class="content">
+
+      <section class="dsec" id="${id}-overview">
+        <h2>Overview</h2>
+        <p class="lede" style="font-size:1rem">${h(d.verdict)}</p>
+        <div class="two">
+          <div class="box"><p class="bt">Why go</p><ul class="list pros">${d.pros.map(p => `<li>${h(p)}</li>`).join("")}</ul></div>
+          <div class="box"><p class="bt">Downsides</p><ul class="list cons">${d.cons.map(p => `<li>${h(p)}</li>`).join("")}</ul></div>
+        </div>
+        <dl class="facts4">${d.facts.map(([k, v]) => `<div><dt>${h(k)}</dt><dd>${h(v)}</dd></div>`).join("")}</dl>
+        <div><p class="bt" style="margin-bottom:8px">The week</p><div class="week">${weekHTML(d.week)}</div></div>
+      </section>
+
+      <section class="dsec" id="${id}-cost">
+        <h2>Cost per person</h2>
+        <div class="table-wrap"><table><tbody>${costsFor(id).map(([l, v, k]) => `<tr class="${k || ""}"><td>${h(l)}</td><td class="num">${h(v)}</td></tr>`).join("")}</tbody></table></div>
+        <p class="note">${h(COST_NOTES[id] || d.costNote)} The low end assumes the cheaper lodging and a cheap flight; the high end assumes the comfortable option and a pricier flight. Food assumes breakfast where you stay, a casual lunch, a sit-down dinner and a few drinks.</p>
+      </section>
+
+      <section class="dsec" id="${id}-stay">
+        <h2>Where to stay</h2>
+        ${areas.map(([place, dates]) => `
+          <div class="areahead"><h3>${h(place)}</h3><span class="small muted">${h(dates)}</span></div>
+          <div class="stays">${stays.filter(s => s.area === place).map(stayCard).join("")}</div>`).join("")}
+        ${(SEARCH[id] || []).length ? `<p class="small">More options: ${SEARCH[id].map(([l, u]) => ext(u, l)).join(" · ")}</p>` : ""}
+        <p class="note">${h(STAY_NOTES[id] || d.stayNote)}</p>
+      </section>
+
+      <section class="dsec" id="${id}-around">
+        <h2>Getting around</h2>
+        ${aroundHTML(id)}
+      </section>
+
+      <section class="dsec" id="${id}-ski">
+        <h2>Ski days</h2>
+        <div class="skidays">${d.skiDays.map(([day, title, plan, lunch, apres]) => `
+          <article class="skiday"><span class="d">${h(day)}</span><h3>${h(title)}</h3><p class="small">${h(plan)}</p>
+            <dl class="kv"><dt>Lunch</dt><dd>${h(lunch)}</dd><dt>Après</dt><dd>${h(apres)}</dd></dl></article>`).join("")}
+        </div>
+      </section>
+
+      <section class="dsec" id="${id}-city">
+        <h2>${h(d.cityName)} days</h2>
+        <div class="banner"><img src="${img(d.city)}" alt="${h(CREDITS[d.city][3])}" loading="lazy"><span class="credit">${h(credit(d.city))}</span></div>
+        <p>${h(d.cityIntro)}</p>
+        <div class="acts">${d.acts.map(([name, cat, when, cost, what, tip]) => `
+          <article class="act"><span class="cat ${cat === "Must-do" ? "must" : ""}">${h(cat)}</span><b>${h(name)}</b>
+            <div class="meta"><span>${h(when)}</span><span>${h(cost)}</span></div>
+            <p>${h(what)}</p><p class="tip">Tip: ${h(tip)}</p></article>`).join("")}
+        </div>
+      </section>
+
+      <section class="dsec" id="${id}-eat">
+        <h2>Eat &amp; drink</h2>
+        <div class="eatgrid">${d.eat.map(([grp, list]) => `
+          <div class="box"><p class="bt">${h(grp)}</p><ul>${list.map(([n, tr, w]) => `<li><b>${h(n)}${tr ? `<span class="tier">${h(tr)}</span>` : ""}</b><span>${h(w)}</span></li>`).join("")}</ul></div>`).join("")}
+        </div>
+      </section>
+
+      <section class="dsec" id="${id}-days">
+        <h2>Day by day</h2>
+        <ol class="timeline">${(ITIN[id] || d.itin).map(([day, kind, plan, sleep]) => `
+          <li class="${kind}"><div class="when"><b>${h(day)}</b><span>${kind === "ski" ? "Ski day" : kind === "city" ? "City" : "Travel"} · sleep: ${h(sleep)}</span></div><p>${h(plan)}</p></li>`).join("")}
+        </ol>
+      </section>
+
+      <section class="dsec" id="${id}-know">
+        <h2>Good to know</h2>
+        <div class="warnbox"><p class="bt">Watch out for</p><ul class="list">${(WATCH[id] || d.watch).map(w => `<li>${h(w)}</li>`).join("")}</ul></div>
+        <div class="dfoot">
+          <div><h3>What do you think?</h3><p class="small muted">Votes show up for everyone right away.</p></div>
+          <div class="actions" style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn primary" data-vote="${id}">Vote for ${h(d.short)}</button><a class="btn" href="#${prevId}">← ${h(DEST[prevId].short)}</a><a class="btn" href="#${nextId}">${h(DEST[nextId].short)} →</a></div>
+        </div>
+      </section>
+    </div>
+  </div>`;
+  setupSpy(id, secs);
+}
+
+function renderCompare() {
+  const rows = ORDER.slice().sort((a, b) => (DEST[a].lo + DEST[a].hi) - (DEST[b].lo + DEST[b].hi));
+  const pct = v => ((v - 1500) / 2000 * 100).toFixed(2);
+  const fmt = v => "$" + v.toLocaleString("en-US");
+  $("#v-compare").innerHTML = `
+  <section class="section">
+    <div class="section-head"><p class="eyebrow">Compare</p><h2>All four side by side</h2>
+      <p class="muted">Per person, all-in: lifts, lodging, getting around, gear rental, food, nightlife and an estimated flight. Flights depend on where everyone flies from: the West Coast is cheapest for Canada, the East Coast for Europe.</p></div>
+    <div class="chart" role="img" aria-label="${h(rows.map(id => `${DEST[id].name} ${DEST[id].allIn}`).join(". "))}">
+      <p class="bt">All-in per person, low to high (tick = midpoint)</p>
+      ${rows.map(id => { const d = DEST[id]; return `<div class="crow"><span class="label2">${h(d.name)}</span><div class="track"><span class="bar ${id === "whistler" ? "top" : ""}" style="left:${pct(d.lo)}%;width:${(pct(d.hi) - pct(d.lo)).toFixed(2)}%"></span><span class="mid" style="left:${pct((d.lo + d.hi) / 2)}%"></span></div><span class="val">${h(d.allIn)}</span></div>`; }).join("")}
+      <div class="caxis"><div></div><div class="ticks">${[1500, 2000, 2500, 3000, 3500].map(v => `<span style="left:${pct(v)}%">${fmt(v)}</span>`).join("")}</div><div></div></div>
+      <p class="small muted">The axis starts at $1,500, so bar length shows how wide each estimate is, not the total.</p>
+    </div>
+    <div class="table-wrap"><table style="min-width:960px">
+      <thead><tr><th>Trip</th><th>All-in</th><th>Before flights</th><th>3-day lifts</th><th>Ski days</th><th>Skiing</th><th>Car</th><th>Getting there</th><th>February risk</th></tr></thead>
+      <tbody>${ORDER.map(id => { const d = DEST[id], t = TRANSPORT[id]; return `<tr><td><a href="#${id}"><b>${h(d.name)}</b></a></td><td class="mono">${h(d.allIn)}</td><td class="mono">${h(d.pre)}</td><td class="mono">${h(d.compare.lifts)}</td><td>${h(d.facts[0][1])}</td><td>${h(d.compare.skiing)}</td><td>${h(t ? t.car.short : "")}</td><td><span style="display:inline-flex;gap:6px;align-items:center;white-space:nowrap">${effortHTML(d)} ${h(d.effortText)}</span></td><td>${h(d.compare.risk)}</td></tr>`; }).join("")}</tbody>
+    </table></div>
+  </section>
+
+  <section class="section">
+    <div class="section-head"><h2>How Feb 20–28 lines up</h2></div>
+    <div class="checks">${DATE_CHECKS.map(([k, b, rest]) => `<div class="check"><span class="status ${k}">${k === "ok" ? "Clear" : k === "warn" ? "Overlap" : "Bonus"}</span><div><b>${h(b)}</b> <span class="muted">${h(rest)}</span></div></div>`).join("")}</div>
+  </section>
+
+  <section class="section">
+    <div class="section-head"><h2>Typical February weather</h2></div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Where</th><th>High / low</th><th>What it means</th></tr></thead>
+      <tbody>${WEATHER.map(([w, t, m]) => `<tr><td>${h(w)}</td><td class="mono">${h(t)}</td><td>${h(m)}</td></tr>`).join("")}</tbody></table></div>
+    <p class="small muted">Rounded averages. Check the 10-day forecast the week before.</p>
+  </section>`;
+}
+
+function renderPlan() {
+  const stayCredits = ORDER.flatMap(id => (LODGING[id] || []).filter(s => s.img).map(s => [s.name, s.url]));
+  $("#v-plan").innerHTML = `
+  <section class="section">
+    <div class="section-head"><p class="eyebrow">Plan</p><h2>What to book, and by when</h2>
+      <p class="muted">Lodging and lift passes get more expensive first, so they come first.</p></div>
+    <ol class="steps">${STEPS.map(([w, b, t]) => `<li><div><span class="when">${h(w)}</span><b>${h(b)}</b><span class="small">${h(t)}</span></div></li>`).join("")}</ol>
+  </section>
+  <section class="section">
+    <div class="section-head"><h2>How the numbers were built</h2></div>
+    <ul class="list">${ASSUMPTIONS.map(a => `<li>${h(a)}</li>`).join("")}</ul>
+  </section>
+  <section class="section">
+    <div class="section-head"><h2>Sources</h2></div>
+    <ol class="sources">${SOURCES.map(([t, u]) => `<li>${ext(u, t)}</li>`).join("")}</ol>
+  </section>
+  <section class="section">
+    <div class="section-head"><h2>Photo credits</h2><p class="muted">Destination photos are from Wikimedia Commons under the licenses shown. Lodging photos come from each property's own website and belong to them.</p></div>
+    <ol class="sources">${Object.entries(CREDITS).map(([k, [a, l, u, t]]) => `<li>${ext(u, t)}, ${h(a)}, ${h(l)}</li>`).join("")}${stayCredits.map(([n, u]) => `<li>${ext(u, n)}, property website</li>`).join("")}</ol>
+  </section>`;
+}
+
+
+/* ---------- router ---------- */
+const VIEWS = ["home", "dest", "compare", "vote", "plan"];
+const ARTIFACT_URL = "https://claude.ai/artifact/X6CbmKDP5bTXR9qdmUgZAN";
+const CAST_RE = /^cast-(whistler|banff|alps|barcelona|x[a-z0-9]{4,12})-([a-z0-9][a-z0-9-]{0,23})$/;
+let currentDest = null, scrollToSend = false;
+function route() {
+  const key = decodeURIComponent(location.hash.slice(1));
+  const cm = key.match(CAST_RE);
+  let view = "home";
+  if (DEST[key]) { view = "dest"; if (currentDest !== key) { renderDest(key); currentDest = key; } }
+  else if (cm) { view = "vote"; V.pendingCast = { opt: cm[1], slug: cm[2] }; }
+  else if (["compare", "vote", "plan"].includes(key)) view = key;
+  VIEWS.forEach(v => { $(`#v-${v}`).hidden = v !== view; });
+  document.querySelectorAll("#nav a").forEach(a => {
+    const t = a.getAttribute("href").slice(1);
+    if ((t === "" && view === "home") || t === key) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+  });
+  if (scrollToSend && view === "vote") {
+    scrollToSend = false;
+    window.scrollTo(0, 0);
+    renderVotes().then(() => { const el = $("#guest-send"); if (el && !el.hidden) el.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" }); });
+  } else { window.scrollTo(0, 0); renderVotes(); }
+}
+window.addEventListener("hashchange", route);
+
+/* ---------- live votes, link votes, suggestions ---------- */
+const store = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
+const V = { avail: "pending", db: null, user: null, uid: null, owner: false, canWrite: null, readOnly: false, votes: {}, sugg: {}, got: { votes: false, sugg: false }, timedOut: false, busy: false, pendingCast: null, guestPick: store.get("dbst-pick") || null };
+const toastEl = $("#toast"); let toastT = 0;
+function toast(msg) { toastEl.textContent = msg; toastEl.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => { toastEl.hidden = true; }, 3400); }
+const canVote = () => V.avail === "ready" && !!V.uid && !V.readOnly && V.canWrite !== false;
+const isGuestId = id => id.startsWith("guest-");
+const titleName = slug => slug.split("-").filter(Boolean).map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ") || "Friend";
+const slugify = s => String(s || "").normalize("NFKD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 24).replace(/-+$/, "");
+function ago(iso) {
+  const t = Date.parse(iso); if (!t) return "";
+  const s = Math.max(0, (Date.now() - t) / 1000);
+  if (s < 60) return "just now"; if (s < 3600) return `${Math.floor(s / 60)} min ago`; if (s < 86400) return `${Math.floor(s / 3600)} hr ago`;
+  const d = Math.floor(s / 86400); return d === 1 ? "yesterday" : `${d} days ago`;
+}
+async function copyText(text, el) {
+  try { await navigator.clipboard.writeText(text); return true; }
+  catch (e) { if (el) { el.focus(); el.select(); } return false; }
+}
+
+function suggList() {
+  const out = [];
+  for (const [by, doc] of Object.entries(V.sugg)) for (const it of (Array.isArray(doc.items) ? doc.items : [])) {
+    if (!it || typeof it.id !== "string" || typeof it.place !== "string") continue;
+    out.push({ key: `s:${by}:${it.id}`, by, id: it.id, place: it.place.slice(0, 60), why: String(it.why || "").slice(0, 240), link: typeof it.link === "string" && /^https:\/\//i.test(it.link) ? it.link.slice(0, 300) : "", at: it.at || "" });
+  }
+  return out.sort((a, b) => String(a.at).localeCompare(String(b.at)));
+}
+function model() {
+  const sugg = suggList();
+  const keys = new Set([...ORDER, ...sugg.map(s => s.key)]);
+  const voters = {}; keys.forEach(k => voters[k] = []);
+  for (const [vid, v] of Object.entries(V.votes)) { const c = v && v.choice; if (typeof c === "string" && keys.has(c)) voters[c].push(vid); }
+  const total = Object.values(voters).reduce((n, a) => n + a.length, 0);
+  const max = Math.max(0, ...Object.values(voters).map(a => a.length));
+  const mine = V.uid && V.votes[V.uid] ? V.votes[V.uid].choice : null;
+  return { sugg, keys, voters, total, max, mine };
+}
+const labelFor = (k, m) => DEST[k] ? DEST[k].name : (m.sugg.find(s => s.key === k) || {}).place || "a suggestion";
+const keyFromOpt = (opt, m) => DEST[opt] ? opt : ((m.sugg.find(s => s.id === opt.slice(1)) || {}).key || null);
+const optFromKey = k => DEST[k] ? k : "x" + k.split(":")[2];
+
+function statusMsg() {
+  if (V.avail === "pending") return ["", "Connecting to live votes…"];
+  if (canVote()) {
+    if (!(V.got.votes && V.got.sugg) && V.timedOut) return ["warn", "Live votes can't be reached right now. What you see may be out of date."];
+    return ["ok", V.owner ? "You're the organizer. Your vote saves straight to the board, and you can add friends' votes from their links. Tap your pick again to remove it." : "Tap Vote on any trip. Tap your pick again to remove it. You can change it until Fri Nov 6."];
+  }
+  if (V.avail === "ready") return ["", "Pick a trip, add your name, and send your vote. It shows up on the board once the organizer taps your link."];
+  return ["", "Pick a trip, add your name, and send your vote to the group chat. Open this page signed in to claude.ai to see live results."];
+}
+
+let seq = 0;
+async function renderVotes() {
+  const my = ++seq;
+  const m = model();
+  const memberIds = [...new Set([...Object.keys(V.votes), ...m.sugg.map(s => s.by)])].filter(id => !isGuestId(id));
+  let ps = {};
+  if (V.user && memberIds.length) { try { ps = await V.user.profiles(memberIds); } catch (e) { ps = {}; } }
+  if (my !== seq) return;
+  const nm = id => isGuestId(id) ? String((V.votes[id] && V.votes[id].name) || titleName(id.slice(6))).slice(0, 30) : ((ps[id] && ps[id].name) || (id === V.uid ? "You" : "Someone"));
+  const face = id => (!isGuestId(id) && ps[id] && ps[id].avatarUrl) ? `<img src="${h(ps[id].avatarUrl)}" alt="" title="${h(nm(id))}">` : `<span class="ini" title="${h(nm(id))}">${h(nm(id).charAt(0).toUpperCase() || "?")}</span>`;
+  const faces = list => list.length ? `<span class="faces">${list.slice(0, 7).map(face).join("")}</span>` : "";
+  const names = list => list.length ? `<span class="voters">${list.map(id => h(nm(id))).join(", ")}</span>` : "";
+  const pctW = n => m.max ? Math.round(n / m.max * 100) : 0;
+  const live = V.avail === "ready" && (V.got.votes || V.timedOut);
+  const member = canVote();
+  const pick = member ? m.mine : V.guestPick;
+  const voteBtn = k => { const on = pick === k; return `<button class="btn ${on ? "" : "primary"}" data-vote="${h(k)}" aria-pressed="${on}" title="${on ? "Tap again to remove" : ""}">${on ? (member ? "✓ Your pick" : "✓ Picked") : (member ? "Vote" : "Pick")}</button>`; };
+  const [skind, smsg] = statusMsg();
+
+  // home: live results
+  const all = [...ORDER.map(k => ({ k, name: DEST[k].name })), ...m.sugg.map(s => ({ k: s.key, name: s.place + " (suggested)" }))].filter(o => DEST[o.k] || m.voters[o.k].length);
+  const sorted = all.slice().sort((a, b) => m.voters[b.k].length - m.voters[a.k].length);
+  const leader = m.total && sorted[0] ? sorted[0] : null;
+  const tie = leader && sorted[1] && m.voters[sorted[1].k].length === m.voters[leader.k].length;
+  $("#home-results").innerHTML = `
+    <div class="results-head"><h3>Live results</h3><a href="#vote" class="small">Vote or suggest a place →</a></div>
+    <p class="small ${live ? "" : "muted"}">${live ? (m.total ? (tie ? `Tied at ${m.voters[leader.k].length} each. ${m.total} vote${m.total === 1 ? "" : "s"} so far.` : `<b>${h(leader.name)}</b> leads. ${m.total} vote${m.total === 1 ? "" : "s"} so far.`) : "No votes yet. Be the first.") : h(smsg)}</p>
+    <div class="tally">${sorted.map(o => { const n = m.voters[o.k].length; return `<div class="trow ${leader && !tie && o.k === leader.k ? "lead" : ""}"><span class="tname">${h(o.name)}</span><div class="tbar"><i style="width:${pctW(n)}%"></i></div><span class="tnum">${n}</span></div>`; }).join("")}</div>`;
+
+  // vote page: status + link-vote banner
+  const st = $("#vote-status"); st.className = `notice ${skind}`; st.textContent = smsg;
+  const cb = $("#cast-banner");
+  if (V.pendingCast) {
+    const { opt, slug } = V.pendingCast, name = titleName(slug), key = keyFromOpt(opt, m);
+    const label = key ? labelFor(key, m) : "a suggestion that's no longer on the list";
+    const prev = V.votes["guest-" + slug], prevLabel = prev && prev.choice ? labelFor(prev.choice, m) : "";
+    let inner;
+    if (V.avail === "pending") inner = `<p>Checking the vote link from <b>${h(name)}</b>…</p>`;
+    else if (V.owner && V.db && key) inner = prev && prev.choice === key
+      ? `<p><b>${h(name)}</b>'s vote for <b>${h(label)}</b> is already on the board.</p><div class="card-actions"><button class="btn" data-cast="dismiss">Done</button></div>`
+      : `<p>Add <b>${h(name)}</b>'s vote for <b>${h(label)}</b>${prevLabel ? ` (changing it from ${h(prevLabel)})` : ""}?</p><div class="card-actions"><button class="btn primary" data-cast="record">Add vote</button><button class="btn" data-cast="dismiss">Ignore</button></div>`;
+    else if (V.owner && V.db) inner = `<p><b>${h(name)}</b> voted for a suggestion that has since been removed.</p><div class="card-actions"><button class="btn" data-cast="dismiss">Dismiss</button></div>`;
+    else inner = `<p>This is <b>${h(name)}</b>'s vote link for <b>${h(label)}</b>. Only the organizer can add it to the board, so make sure it's in the group chat.</p><div class="card-actions"><button class="btn" data-cast="dismiss">OK</button></div>`;
+    cb.innerHTML = inner; cb.hidden = false;
+  } else cb.hidden = true;
+
+  // organizer tools
+  const own = V.owner && !!V.db;
+  $("#owner-share").hidden = !own;
+  if (own) {
+    const sel = $("#hand-choice"), opts = [...ORDER.map(k => [k, DEST[k].name]), ...m.sugg.map(s => [s.key, s.place + " (suggested)"])];
+    const sig = opts.map(o => o[0]).join("|");
+    if (sel.dataset.sig !== sig) { const keep = sel.value; sel.innerHTML = opts.map(([k, l]) => `<option value="${h(k)}">${h(l)}</option>`).join(""); if (opts.some(o => o[0] === keep)) sel.value = keep; sel.dataset.sig = sig; }
+  }
+
+  // vote options
+  $("#vote-main").innerHTML = ORDER.map(k => { const d = DEST[k], list = m.voters[k]; return `
+    <div class="vopt ${pick === k ? "mine" : ""}">
+      <a class="thumb" href="#${k}"><img src="${img(d.hero)}" alt="${h(CREDITS[d.hero][3])}" loading="lazy"></a>
+      <div class="mid"><b>${h(d.name)} <span class="tag ${d.top ? "top" : ""}" style="vertical-align:2px">${h(d.tag)}</span></b>
+        <span class="mono small">${h(d.allIn)} all-in</span>
+        <div class="line"><div class="tbar"><i style="width:${pctW(list.length)}%"></i></div><span class="tnum">${list.length}</span>${faces(list)}</div>${names(list)}</div>
+      <div class="acts2">${voteBtn(k)}<a class="btn" href="#${k}">Details</a></div>
+    </div>`; }).join("");
+  const cv = $("#clear-vote");
+  cv.hidden = !pick || V.avail === "pending";
+  cv.textContent = member ? "Remove my vote" : "Clear my pick";
+
+  // send-your-vote panel (everyone who can't write to the board)
+  $("#guest-send").hidden = member || V.avail === "pending";
+  if (!$("#guest-send").hidden) updateGuestMsg(m);
+
+  // who voted
+  const rows = [];
+  for (const [k, list] of Object.entries(m.voters)) for (const id of list) rows.push({ id, k, at: String((V.votes[id] && V.votes[id].at) || "") });
+  rows.sort((a, b) => b.at.localeCompare(a.at));
+  $("#all-votes").innerHTML = V.avail !== "ready"
+    ? `<p class="note">${V.avail === "pending" ? "Loading…" : "Open this page signed in to claude.ai to see who voted."}</p>`
+    : rows.length ? rows.map(r => { const canDel = V.owner || (r.id === V.uid && member); return `
+      <div class="who-row">${face(r.id)}<div class="who-mid"><b>${h(nm(r.id))}${isGuestId(r.id) ? ` <span class="tag">via link</span>` : ""}</b><span class="small muted">${h(labelFor(r.k, m))}${r.at ? ` · ${h(ago(r.at))}` : ""}</span></div>${canDel ? `<button class="linkbtn" data-delvote="${h(r.id)}">${r.id === V.uid ? "Undo" : "Remove"}</button>` : ""}</div>`; }).join("")
+    : `<p class="note">No votes yet.</p>`;
+
+  // suggestions
+  $("#vote-sugg").innerHTML = m.sugg.length ? m.sugg.map(s => { const list = m.voters[s.key], canRemove = member && (V.owner || s.by === V.uid); let host = ""; try { host = s.link ? new URL(s.link).hostname.replace(/^www\./, "") : ""; } catch (e) { host = ""; } return `
+    <div class="vopt ${pick === s.key ? "mine" : ""}">
+      <div class="thumb"><span class="pin">${h(s.place.trim().charAt(0).toUpperCase() || "?")}</span></div>
+      <div class="mid"><b>${h(s.place)}</b>${s.why ? `<span class="why">${h(s.why)}</span>` : ""}
+        <span class="by">Suggested by ${h(nm(s.by))}${host ? ` · <a href="${h(s.link)}" target="_blank" rel="noopener noreferrer">${h(host)}</a>` : ""}${canRemove ? ` · <button class="linkbtn" data-remove="${h(s.by)}|${h(s.id)}">Remove</button>` : ""}</span>
+        <div class="line"><div class="tbar"><i style="width:${pctW(list.length)}%"></i></div><span class="tnum">${list.length}</span>${faces(list)}</div>${names(list)}</div>
+      <div class="acts2">${voteBtn(s.key)}</div>
+    </div>`; }).join("") : `<p class="note">No suggestions yet.${member ? " Add one above and it shows up here for everyone to vote on." : ""}</p>`;
+
+  ["#sg-place", "#sg-link", "#sg-why", "#sg-submit"].forEach(s => { $(s).disabled = !member; });
+  const mineCount = (V.sugg[V.uid] && Array.isArray(V.sugg[V.uid].items)) ? V.sugg[V.uid].items.length : 0;
+  $("#sg-hint").textContent = member ? `Up to 5 suggestions each. You've added ${mineCount}.` : "Only the organizer's account can add suggestions. Put your idea in the \"Anything else?\" box when you send your vote.";
+  $("#nav-count").textContent = m.total ? String(m.total) : "";
+  paintVoteButtons(m);
+}
+
+function updateGuestMsg(m) {
+  m = m || model();
+  const name = $("#gv-name").value.trim().slice(0, 30), note = $("#gv-note").value.trim().replace(/\s+/g, " ").slice(0, 140);
+  const k = V.guestPick && (DEST[V.guestPick] || m.sugg.some(s => s.key === V.guestPick)) ? V.guestPick : null;
+  const label = k ? labelFor(k, m) : "";
+  $("#gv-pick").innerHTML = k ? `Your pick: <b>${h(label)}</b> <button class="linkbtn" type="button" id="gv-clear">change</button>` : "Pick a trip above first.";
+  const slug = slugify(name), ready = !!(k && slug);
+  $("#gv-msg").value = ready ? `${name} votes ${label} for Don's bachelor trip.${note ? " " + note : ""} Tap to add it to the board: ${ARTIFACT_URL}#cast-${optFromKey(k)}-${slug}` : (k ? (name && !slug ? "Type your name in English letters so it fits in the link." : "Add your name to make your vote link.") : "");
+  $("#gv-copy").disabled = !ready;
+}
+
+function paintVoteButtons(m) {
+  m = m || model();
+  const member = canVote(), pick = member ? m.mine : V.guestPick;
+  document.querySelectorAll("#v-home [data-vote], #v-dest [data-vote]").forEach(b => {
+    const k = b.getAttribute("data-vote"), on = pick === k, n = (m.voters[k] || []).length;
+    const base = b.closest(".subnav") ? "Vote for this trip" : (b.closest(".dfoot") ? `Vote for ${DEST[k] ? DEST[k].short : ""}` : "Vote");
+    b.setAttribute("aria-pressed", String(on));
+    b.title = on ? "Tap again to remove" : "";
+    b.innerHTML = `${on ? (member ? "✓ Your pick" : "✓ Picked") : h(base)}${n ? ` <span class="count">${n}</span>` : ""}`;
+  });
+}
+
+async function writeWith(fn, okMsg) {
+  if (V.busy) return; V.busy = true;
+  try { await fn(); if (okMsg) toast(okMsg); }
+  catch (e) {
+    const code = e && e.code;
+    if (code === "unavailable") { try { await new Promise(r => setTimeout(r, 600 + Math.random() * 900)); await fn(); if (okMsg) toast(okMsg); } catch (e2) { toast("Couldn't save just now. Try again in a minute."); } }
+    else if (code === "invalid_argument") { V.readOnly = true; toast("This account can't write to the board. Send your vote as a link instead."); renderVotes(); }
+    else if (code === "quota_exceeded") toast("The vote board is full. Tell the organizer.");
+    else if (code === "revoked") { V.avail = "none"; renderVotes(); }
+    else toast("Couldn't save. Try again.");
+  } finally { V.busy = false; }
+}
+
+function castVote(k) {
+  if (V.avail === "pending") { toast("Still connecting. Try again in a second."); return; }
+  const m = model();
+  if (canVote()) {
+    if (m.mine === k) writeWith(() => V.db.doc("votes/" + V.uid).delete(), "Vote removed.");
+    else writeWith(() => V.db.doc("votes/" + V.uid).set({ choice: k, at: new Date().toISOString() }), `Saved: you voted for ${labelFor(k, m)}.`);
+    return;
+  }
+  V.guestPick = V.guestPick === k ? null : k;
+  store.set("dbst-pick", V.guestPick || "");
+  if (!V.guestPick) { toast("Pick cleared."); renderVotes(); return; }
+  toast(`Picked ${labelFor(k, m)}. Add your name and send it.`);
+  if ($("#v-vote").hidden) { scrollToSend = true; location.hash = "#vote"; }
+  else renderVotes().then(() => $("#guest-send").scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" }));
+}
+
+function recordGuest(slug, key, name) {
+  return writeWith(() => V.db.doc("votes/guest-" + slug).set({ choice: key, name: String(name).slice(0, 30), guest: true, at: new Date().toISOString() }), `Added ${name}: ${labelFor(key, model())}.`);
+}
+
+document.addEventListener("click", async e => {
+  const vb = e.target.closest("[data-vote]");
+  if (vb) { e.preventDefault(); castVote(vb.getAttribute("data-vote")); return; }
+  const jb = e.target.closest("[data-jump]");
+  if (jb) { const el = document.getElementById(jb.getAttribute("data-jump")); if (el) el.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" }); return; }
+  const cb = e.target.closest("[data-cast]");
+  if (cb) {
+    const pc = V.pendingCast;
+    if (cb.getAttribute("data-cast") === "record" && pc && V.owner && V.db) { const key = keyFromOpt(pc.opt, model()); if (key) await recordGuest(pc.slug, key, titleName(pc.slug)); }
+    V.pendingCast = null; location.hash = "#vote"; return;
+  }
+  const dv = e.target.closest("[data-delvote]");
+  if (dv && V.db) { const id = dv.getAttribute("data-delvote"); if (V.owner || (id === V.uid && canVote())) writeWith(() => V.db.doc("votes/" + id).delete(), id === V.uid ? "Vote removed." : "Vote removed from the board."); return; }
+  if (e.target.closest("#gv-clear")) { V.guestPick = null; store.set("dbst-pick", ""); renderVotes(); $("#vote-main").scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" }); return; }
+  const rb = e.target.closest("[data-remove]");
+  if (rb && canVote()) {
+    const [by, id] = rb.getAttribute("data-remove").split("|");
+    const doc = V.sugg[by]; if (!doc) return;
+    const items = (doc.items || []).filter(it => it && it.id !== id);
+    writeWith(() => V.db.doc("suggestions/" + by).set({ items }), "Suggestion removed.");
+  }
+});
+$("#clear-vote").addEventListener("click", () => {
+  if (canVote()) { if (model().mine) writeWith(() => V.db.doc("votes/" + V.uid).delete(), "Vote removed."); }
+  else { V.guestPick = null; store.set("dbst-pick", ""); toast("Pick cleared."); renderVotes(); }
+});
+$("#copy-share").addEventListener("click", async () => { const ok = await copyText(ARTIFACT_URL, $("#share-url")); toast(ok ? "Link copied. Paste it in the group chat." : "Link selected. Copy it from the box."); });
+$("#gv-copy").addEventListener("click", async () => { const ok = await copyText($("#gv-msg").value, $("#gv-msg")); $("#gv-copied").textContent = ok ? "Copied. Paste it in the group chat." : "Selected. Copy it and paste it in the group chat."; });
+$("#gv-name").value = store.get("dbst-name") || "";
+$("#gv-name").addEventListener("input", () => { store.set("dbst-name", $("#gv-name").value); updateGuestMsg(); });
+$("#gv-note").addEventListener("input", () => updateGuestMsg());
+$("#hand-form").addEventListener("submit", e => {
+  e.preventDefault();
+  if (!(V.owner && V.db)) return;
+  const name = $("#hand-name").value.trim().slice(0, 30), slug = slugify(name), key = $("#hand-choice").value;
+  if (!slug || !key) { toast("Add a name and pick a trip."); return; }
+  recordGuest(slug, key, name).then(() => $("#hand-form").reset());
+});
+
+$("#suggest-form").addEventListener("submit", e => {
+  e.preventDefault();
+  if (!canVote()) return;
+  const place = $("#sg-place").value.trim().slice(0, 60), why = $("#sg-why").value.trim().slice(0, 240); const link = $("#sg-link").value.trim().slice(0, 300);
+  if (!place) { toast("Add a place name."); return; }
+  if (link && !/^https:\/\//i.test(link)) { toast("Links need to start with https://"); return; }
+  const items = (V.sugg[V.uid] && Array.isArray(V.sugg[V.uid].items)) ? V.sugg[V.uid].items.slice() : [];
+  if (items.length >= 5) { toast("You've hit 5 suggestions. Remove one first."); return; }
+  items.push({ id: Math.random().toString(36).slice(2, 10), place, why, link, at: new Date().toISOString() });
+  writeWith(async () => { await V.db.doc("suggestions/" + V.uid).set({ items }); $("#suggest-form").reset(); }, `Added ${place}. It's on the vote list now.`);
+});
+
+async function connect() {
+  const c = window.claude;
+  if (!c || typeof c.use !== "function") { V.avail = "none"; renderVotes(); return; }
+  let db = null, user = null;
+  try { [db, user] = await Promise.all([c.use("db"), c.use("user")]); } catch (e) { db = null; }
+  V.user = user;
+  if (!db) { V.avail = "none"; renderVotes(); return; }
+  V.db = db;
+  if (user) { const me = await user.me(); V.uid = me.id; V.owner = me.isOwner; V.canWrite = await user.can("data.write"); }
+  V.avail = "ready";
+  const timer = setTimeout(() => { V.timedOut = true; renderVotes(); }, 10000);
+  const done = () => { if (V.got.votes && V.got.sugg) clearTimeout(timer); };
+  const onErr = e => { if (e && e.code === "revoked") V.avail = "none"; V.timedOut = true; clearTimeout(timer); renderVotes(); };
+  db.collection("votes").onSnapshot(snap => {
+    const o = {}; snap.docs.forEach(d => { if (d.exists) o[d.id] = d.data(); }); V.votes = o;
+    if (!snap.metadata.fromCache) { V.got.votes = true; done(); } renderVotes();
+  }, onErr);
+  db.collection("suggestions").onSnapshot(snap => {
+    const o = {}; snap.docs.forEach(d => { if (d.exists) o[d.id] = d.data(); }); V.sugg = o;
+    if (!snap.metadata.fromCache) { V.got.sugg = true; done(); } renderVotes();
+  }, onErr);
+  renderVotes();
+}
+
+/* ---------- boot ---------- */
+renderHome(); renderCompare(); renderPlan(); route(); connect();
+})();
+</script>
